@@ -6,7 +6,7 @@ class MovieSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Movie
-        fields = ['id', 'title']
+        fields = ['id', 'title', 'poster_path']
 
 class MovieDetailSerializer(MovieSerializer):
     reviews = Movie.reviews
@@ -15,7 +15,6 @@ class MovieDetailSerializer(MovieSerializer):
             'release_date',
             'vote_average',
             'overview',
-            'poster_path',
             'backdrop_path',
             'genres',
             'adult',
