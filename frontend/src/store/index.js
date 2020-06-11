@@ -53,7 +53,13 @@ export default new Vuex.Store({
         data: loginData,
         route: API.DB_ROUTES.login,
       };
-      console.log("login");
+      dispatch("postAuthData", info);
+    },
+    signup({ dispatch }, signupData) {
+      const info = {
+        data: signupData,
+        route: API.DB_ROUTES.signup,
+      };
       dispatch("postAuthData", info);
     },
   },
