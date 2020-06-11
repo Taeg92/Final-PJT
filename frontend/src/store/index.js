@@ -13,6 +13,7 @@ export default new Vuex.Store({
   state: {
     authToken: cookies.get("auth-token"),
     movies: [],
+    selectedMovie: null,
   },
   getters: {
     isLoggedIn: (state) => !!state.authToken,
@@ -30,14 +31,23 @@ export default new Vuex.Store({
       state.authToken = token;
       cookies.set("auth-token", token);
     },
+    SET_SELECTED_MOVIE(state, movie) {
+      state.selectedMovie = movie;
+    },
   },
   actions: {
-    fetchMovies({ commit }) {
+    getMovies({ commit }) {
       axios
         .get(API.DB_BASE + API.DB_ROUTES.movies)
-        .then((res) => {
-          commit("SET_MOVIES", res.data);
-        })
+        .then((res) => commit("SET_MOVIES", res.data))
+        .catch((err) => console.log(err.response));
+    },
+    getMovieDetail({ commit }, moviePK) {
+      axios
+        .get(API.DB_BASE + API.DB_ROUTES.movies + moviePK)
+        .then((res) =>
+          commit("SET_SELECTED_MOVIE", res.data)
+        )
         .catch((err) => console.log(err.response));
     },
     postAuthData({ commit }, info) {

@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+import MovieDetail from "../views/MovieDetail.vue";
 import Signup from "../views/accounts/Signup.vue";
 import Login from "../views/accounts/Login.vue";
 import Logout from "../views/accounts/Logout.vue";
@@ -27,6 +28,11 @@ const routes = [
     path: "/logout",
     name: "Logout",
     component: Logout,
+  },
+  {
+    path: "/movies/:moviePK",
+    name: "MovieDetail",
+    component: MovieDetail,
   },
   // component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
 ];

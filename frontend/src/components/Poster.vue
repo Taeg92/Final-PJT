@@ -1,6 +1,6 @@
 <template>
   <div class="poster">
-    <img :src="poster_path" width="130" height="200" />
+    <img :src="poster_path" width="130" height="200" @click="selectMovie" />
   </div>
 </template>
 
@@ -13,6 +13,11 @@ export default {
   computed: {
     poster_path() {
       return "https://image.tmdb.org/t/p/original" + this.movie.poster_path;
+    }
+  },
+  methods: {
+    selectMovie() {
+      this.$router.push(`/movies/${this.movie.id}`);
     }
   }
 };
