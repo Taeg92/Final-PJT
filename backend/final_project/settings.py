@@ -51,12 +51,16 @@ INSTALLED_APPS = [
     'allauth.account',
     'rest_auth.registration',
 
+    # cors headers
+    'corsheaders',
+
     #Apps
     'accounts',
     'community',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -139,6 +143,10 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'accounts.User'
 
 SITE_ID = 1
+
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:8080",
+]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
