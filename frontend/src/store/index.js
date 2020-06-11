@@ -34,13 +34,9 @@ export default new Vuex.Store({
   actions: {
     fetchMovies({ commit }) {
       axios
-        .get(API.TMDB_BASE + "popular", {
-          params: {
-            api_key: process.env.VUE_APP_TMDB_API_KEY,
-          },
-        })
+        .get(API.DB_BASE + API.DB_ROUTES.movies)
         .then((res) => {
-          commit("SET_MOVIES", res.data.results);
+          commit("SET_MOVIES", res.data);
         })
         .catch((err) => console.log(err.response));
     },
