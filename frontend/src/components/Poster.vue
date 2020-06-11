@@ -18,5 +18,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.poster {
+  margin: 15px;
+}
 </style>
