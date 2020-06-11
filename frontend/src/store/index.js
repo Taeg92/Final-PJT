@@ -40,7 +40,6 @@ export default new Vuex.Store({
         .catch((err) => console.log(err.response));
     },
     postAuthData({ commit }, info) {
-      router.push({ name: "Home" });
       axios
         .post(API.DB_BASE + info.route, info.data)
         .then((res) => {
