@@ -16,6 +16,11 @@ export default new Vuex.Store({
   },
   getters: {
     isLoggedIn: (state) => !!state.authToken,
+    config: (state) => ({
+      headers: {
+        Authorization: `Token ${state.authToken}`,
+      },
+    }),
   },
   mutations: {
     SET_MOVIES(state, movies) {
@@ -55,6 +60,20 @@ export default new Vuex.Store({
       };
       console.log("login");
       dispatch("postAuthData", info);
+    },
+    logout({ getters }) {
+      axios
+        .post(
+          API.DB_BASE + API.DB_ROUTES.logout,
+          null,
+          getters.config
+        )
+        .then(() => {
+          this.commit("SET_TOKEN", null);
+          cookies.remove("auth-token");
+          router.push({ name: "Home" });
+        })
+        .catch((err) => console.log(err.response));
     },
   },
   modules: {},
