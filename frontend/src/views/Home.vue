@@ -24,3 +24,10 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.home {
+  display: flex;
+  flex-wrap: wrap;
+}
+</style>
