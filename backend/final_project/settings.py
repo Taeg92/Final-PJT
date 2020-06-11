@@ -40,7 +40,17 @@ INSTALLED_APPS = [
 
     #DRF
     'rest_framework',
-    
+
+    # DRF token auth
+    'rest_framework.authtoken',
+
+    # rest_auth
+    'django.contrib.sites',
+    'rest_auth',
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
+
     #Apps
     'accounts',
     'community',
@@ -127,3 +137,27 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'accounts.User'
+
+SITE_ID = 1
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ],
+    'PAGE_SIZE': 100,
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated'
+    ],
+    # 'DEFAULT_THROTTLE_CLASSES': [
+    #     'rest_framework.throttling.UserRateThrottle',
+    # ],
+    # 'DEFAULT_THROTTLE_RATES': {
+    #     # 'anon': None,
+    #     'user': '4/day',
+    # }
+}
+JWT_AUTH = {
+    'JWT_ALLOW_REFRESH': True,
+}
