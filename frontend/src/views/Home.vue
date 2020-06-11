@@ -1,10 +1,17 @@
 <template>
-  <div class="home"></div>
+  <div class="home">
+    Home
+    <Poster />
+  </div>
 </template>
 
 <script>
+import Poster from "../components/Poster";
+
 export default {
   name: "Home",
-  components: {},
+  components: {
+    Poster
+  }
 };
 </script>
