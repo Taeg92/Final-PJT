@@ -17,10 +17,10 @@ export default {
     ...mapState(["movies"])
   },
   methods: {
-    ...mapActions(["fetchMovies"])
+    ...mapActions(["getMovies"])
   },
   created() {
-    this.fetchMovies();
+    this.getMovies();
   }
 };
 </script>
