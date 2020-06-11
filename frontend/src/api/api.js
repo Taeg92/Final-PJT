@@ -5,5 +5,6 @@ export default {
     login: "accounts/rest-auth/login/",
     signup: "accounts/rest-auth/signup/",
     logout: "accounts/rest-auth/logout/",
+    movies: "community/movies/",
   },
 };
