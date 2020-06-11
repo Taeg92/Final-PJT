@@ -1,10 +1,18 @@
 <template>
-  <div class="logout">Logout</div>
+  <div class="logout"></div>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
-  name: "Logout"
+  name: "Logout",
+  methods: {
+    ...mapActions(["logout"])
+  },
+  created() {
+    this.logout();
+  }
 };
 </script>
 
