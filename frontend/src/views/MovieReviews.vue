@@ -1,7 +1,11 @@
 <template>
   <div class="movie-reviews">
     <ul>
-      <li v-for="review in selectedMovieReviews" :key="review.pk">{{review.title}}</li>
+      <li
+        v-for="review in selectedMovieReviews"
+        :key="review.id"
+        @click="selectReview(moviePK, review.id)"
+      >{{review.title}}</li>
     </ul>
   </div>
 </template>
@@ -21,7 +25,10 @@ export default {
     getMoviePK() {
       this.moviePK = this.$route.params.moviePK;
     },
-    ...mapActions(["getMovieReviews"])
+    ...mapActions(["getMovieReviews"]),
+    selectReview(moviePK, reviewPK) {
+      this.$router.push(`/movies/${moviePK}/reviews/${reviewPK}`);
+    }
   },
   created() {
     this.getMoviePK();

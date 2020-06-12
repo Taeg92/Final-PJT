@@ -1,7 +1,11 @@
 <template>
   <div class="reviews">
     <ul>
-      <li v-for="review in Reviews" :key="review.pk">{{review.title}}</li>
+      <li
+        v-for="review in Reviews"
+        :key="review.id"
+        @click="selectReview(review.movie.id, review.id)"
+      >{{review.title}}</li>
     </ul>
   </div>
 </template>
@@ -13,7 +17,10 @@ export default {
   name: "Reviews",
   computed: { ...mapState(["Reviews"]) },
   methods: {
-    ...mapActions(["getReviews"])
+    ...mapActions(["getReviews"]),
+    selectReview(moviePK, reviewPK) {
+      this.$router.push(`/movies/${moviePK}/reviews/${reviewPK}`);
+    }
   },
   created() {
     this.getReviews();
