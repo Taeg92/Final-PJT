@@ -6,6 +6,7 @@ import Signup from "../views/accounts/Signup.vue";
 import Login from "../views/accounts/Login.vue";
 import Logout from "../views/accounts/Logout.vue";
 import MovieReviews from "../views/MovieReviews.vue";
+import Reviews from "../views/Reviews.vue";
 
 Vue.use(VueRouter);
 
@@ -36,8 +37,13 @@ const routes = [
     component: MovieDetail,
   },
   {
+    path: "/reviews",
+    name: "Reviews",
+    component: Reviews,
+  },
+  {
     path: "/movies/:moviePK/reviews",
-    name: "MoieReviews",
+    name: "MovieReviews",
     component: MovieReviews,
   },
   // component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')

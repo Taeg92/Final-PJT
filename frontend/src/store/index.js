@@ -13,6 +13,7 @@ export default new Vuex.Store({
   state: {
     authToken: cookies.get("auth-token"),
     movies: [],
+    reviews: [],
     selectedMovie: null,
     selectedMovieReviews: [],
   },
@@ -25,12 +26,12 @@ export default new Vuex.Store({
     }),
   },
   mutations: {
-    SET_MOVIES(state, movies) {
-      state.movies = movies;
-    },
     SET_TOKEN(state, token) {
       state.authToken = token;
       cookies.set("auth-token", token);
+    },
+    SET_MOVIES(state, movies) {
+      state.movies = movies;
     },
     SET_SELECTED_MOVIE(state, movie) {
       state.selectedMovie = movie;
@@ -40,6 +41,9 @@ export default new Vuex.Store({
     },
     CLEAR_SELECTED_MOVIE(state) {
       state.selectedMovie = null;
+    },
+    SET_REVIEWS(state, reviews) {
+      state.reviews = reviews;
     },
   },
   actions: {
@@ -59,6 +63,12 @@ export default new Vuex.Store({
     },
     clearMovie({ commit }) {
       commit("CLEAR_SELECTED_MOVIE");
+    },
+    getReviews({ commit }) {
+      axios
+        .get(API.DB_BASE + API.DB_ROUTES.reviews())
+        .then((res) => commit("SET_REVIEWS", res.data))
+        .catch((err) => console.log(err.response));
     },
     getMovieReviews({ commit }, moviePK) {
       axios
