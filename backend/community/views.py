@@ -70,6 +70,19 @@ class ReviewDetail(APIView):
         review = self.get_object(pk)
         serializer = ReviewDetailSerializer(review)
         return Response(serializer.data)
+    
+    def put(self, request, pk, format=None):
+        review = self.get_object(pk)
+        serializer = ReviewDetailSerializer(review, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        review = self.get_object(pk)
+        review.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 class MovieReviews(APIView):
     
@@ -89,8 +102,6 @@ class MovieReviews(APIView):
         movie = self.get_object(pk)
         serializer = ReviewSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            # serializer.user = request.user
-            # serializer.movie = movie
             serializer.save(movie=movie, user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -108,3 +119,45 @@ class ReviewComments(APIView):
         comments = review.comments
         serializer = CommentSerializer(comments, many=True)
         return Response(serializer.data)
+    
+    def post(self, request, pk, format=None):
+        review = self.get_object(pk)
+        serializer = CommentSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(review=review, user=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# class CommentList(APIView):
+    
+#     def get(self, request, format=None):
+#         comments = Comment.objects.all()
+#         serializer = CommentSerializer(comments, many=True)
+#         return Response(serializer.data)
+        
+
+class CommentDetail(APIView):
+    # Comment CRUD 만들어라
+    def get_object(self, pk):
+        try:
+            return Comment.objects.get(pk=pk)
+        except Comment.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        comment = self.get_object(pk)
+        serializer = CommentSerializer(comment)
+        return Response(serializer.data)
+    
+    def put(self, request, pk, format=None):
+        comment = self.get_object(pk)
+        serializer = CommentSerializer(comment, data=request.data)
+        if serializer.is_valid():
+            serializer.save(user=requset.user)
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        comment = self.get_object(pk)
+        comment.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
