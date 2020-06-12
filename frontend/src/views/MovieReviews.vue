@@ -1,5 +1,5 @@
 <template>
-  <div class="reviews">
+  <div class="movie-reviews">
     <ul>
       <li v-for="review in selectedMovieReviews" :key="review.pk">{{review.title}}</li>
     </ul>
@@ -10,7 +10,7 @@
 import { mapState, mapActions } from "vuex";
 
 export default {
-  name: "Reviews",
+  name: "MovieReviews",
   data() {
     return {
       moviePK: null
