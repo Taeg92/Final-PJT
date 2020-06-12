@@ -89,10 +89,10 @@ class MovieReviews(APIView):
         movie = self.get_object(pk)
         serializer = ReviewSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            serializer.user = request.user
-            serializer.movie = movie
-            serializer.save()
-            return Response(serializer.sdata, status=status.HTTP_201_CREATED)
+            # serializer.user = request.user
+            # serializer.movie = movie
+            serializer.save(movie=movie, user=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ReviewComments(APIView):
