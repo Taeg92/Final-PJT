@@ -2,7 +2,7 @@
   <div class="reviews">
     <ul>
       <li
-        v-for="review in Reviews"
+        v-for="review in reviews"
         :key="review.id"
         @click="selectReview(review.movie.id, review.id)"
       >{{review.title}}</li>
@@ -15,7 +15,7 @@ import { mapState, mapActions } from "vuex";
 
 export default {
   name: "Reviews",
-  computed: { ...mapState(["Reviews"]) },
+  computed: { ...mapState(["reviews"]) },
   methods: {
     ...mapActions(["getReviews"]),
     selectReview(moviePK, reviewPK) {

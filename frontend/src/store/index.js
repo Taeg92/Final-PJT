@@ -16,6 +16,7 @@ export default new Vuex.Store({
     reviews: [],
     selectedMovie: null,
     selectedMovieReviews: [],
+    selectedReview: null,
   },
   getters: {
     isLoggedIn: (state) => !!state.authToken,
@@ -44,6 +45,9 @@ export default new Vuex.Store({
     },
     SET_REVIEWS(state, reviews) {
       state.reviews = reviews;
+    },
+    SET_SELECTED_REVIEW(state, review) {
+      state.selectedReview = review;
     },
   },
   actions: {
@@ -76,6 +80,16 @@ export default new Vuex.Store({
         .then((res) =>
           commit("SET_SELECTED_MOVIE_REVIEWS", res.data)
         )
+        .catch((err) => console.log(err.response));
+    },
+    getReviewDetail({ commit }, reviewPK) {
+      axios
+        .get(
+          API.DB_BASE + API.DB_ROUTES.reviewDetail(reviewPK)
+        )
+        .then((res) => {
+          commit("SET_SELECTED_REVIEW", res.data);
+        })
         .catch((err) => console.log(err.response));
     },
     postAuthData({ commit }, info) {
