@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "poster",
   props: {
@@ -16,7 +18,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["clearMovie"]),
     selectMovie() {
+      this.clearMovie();
       this.$router.push(`/movies/${this.movie.id}`);
     }
   }
