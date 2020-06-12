@@ -146,6 +146,7 @@ SITE_ID = 1
 
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:8080",
+    "http://172.16.100.110:8080",
 ]
 
 REST_FRAMEWORK = {
