@@ -34,6 +34,9 @@ export default new Vuex.Store({
     SET_SELECTED_MOVIE(state, movie) {
       state.selectedMovie = movie;
     },
+    CLEAR_SELECTED_MOVIE(state) {
+      state.selectedMovie = null;
+    },
   },
   actions: {
     getMovies({ commit }) {
@@ -49,6 +52,9 @@ export default new Vuex.Store({
           commit("SET_SELECTED_MOVIE", res.data)
         )
         .catch((err) => console.log(err.response));
+    },
+    clearMovie({ commit }) {
+      commit("CLEAR_SELECTED_MOVIE");
     },
     postAuthData({ commit }, info) {
       axios

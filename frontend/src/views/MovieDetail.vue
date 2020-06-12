@@ -1,5 +1,5 @@
 <template>
-  <div class="movie-detail">
+  <div v-if="selectedMovie" class="movie-detail">
     <img :src="poster_path" width="300" height="500" />
     <h4>{{ selectedMovie.title }}</h4>
     <span>평점: {{ selectedMovie.vote_average }}</span>
@@ -28,7 +28,10 @@ export default {
     getMoviePK() {
       this.moviePK = this.$route.params.moviePK;
     },
-    ...mapActions(["getMovieDetail"])
+    ...mapActions(["getMovieDetail"]),
+    showReviews() {
+      this.$router.push(`/movies/${this.movie.id}/reviews`);
+    }
   },
   created() {
     this.getMoviePK();
