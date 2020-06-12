@@ -60,7 +60,7 @@ export default new Vuex.Store({
     clearMovie({ commit }) {
       commit("CLEAR_SELECTED_MOVIE");
     },
-    getMovieReviews(state, moviePK) {
+    getMovieReviews({ commit }, moviePK) {
       axios
         .get(API.DB_BASE + API.DB_ROUTES.reviews(moviePK))
         .then((res) =>

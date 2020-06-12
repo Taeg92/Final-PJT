@@ -25,7 +25,7 @@ export default {
   },
   created() {
     this.getMoviePK();
-    this.getMovieReivews(this.moviePK);
+    this.getMovieReviews(this.moviePK);
   }
 };
 </script>
