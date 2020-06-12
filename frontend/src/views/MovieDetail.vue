@@ -3,6 +3,7 @@
     <img :src="poster_path" width="300" height="500" />
     <h4>{{ selectedMovie.title }}</h4>
     <span>평점: {{ selectedMovie.vote_average }}</span>
+    <button @click="showReviews">리뷰보기</button>
   </div>
 </template>
 
@@ -30,7 +31,7 @@ export default {
     },
     ...mapActions(["getMovieDetail"]),
     showReviews() {
-      this.$router.push(`/movies/${this.movie.id}/reviews`);
+      this.$router.push(`/movies/${this.moviePK}/reviews`);
     }
   },
   created() {
