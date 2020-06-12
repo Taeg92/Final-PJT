@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from .models import Movie, Review, Comment
-from .serializers import MovieSerializer, MovieDetailSerializer, ReviewSerializer, CommentSerializer, MovieReviewsSerializer
+from .serializers import MovieSerializer, MovieDetailSerializer, ReviewSerializer, CommentSerializer, MovieReviewsSerializer, ReviewDetailSerializer
 
 from django.http import Http404
 from rest_framework.views import APIView
@@ -55,7 +55,20 @@ class ReviewList(APIView):
     
     def get(self, request, format=None):
         reviews = Review.objects.all()
-        serializer = ReviewSerializer(reviews, many=True)
+        serializer = ReviewDetailSerializer(reviews, many=True)
+        return Response(serializer.data)
+
+class ReviewDetail(APIView):
+    
+    def get_object(self, pk):
+        try:
+            return Review.objects.get(pk=pk)
+        except Review.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        review = self.get_object(pk)
+        serializer = ReviewDetailSerializer(review)
         return Response(serializer.data)
 
 class MovieReviews(APIView):
@@ -82,17 +95,16 @@ class MovieReviews(APIView):
             return Response(serializer.sdata, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class ReviewComments(APIView):
+    
+    def get_object(self, pk):
+        try:
+            return Review.objects.get(pk=pk)
+        except Review.DoesNotExist:
+            raise Http404
 
-@api_view(['GET'])
-def comment_list(request):
-    comments = Comment.objects.all()
-    serializer = CommentSerializer(comments, many=True)
-    return Response(serializer.data)
-
-@api_view(['POST'])
-# @permission_classes([IsAuthenticated])
-def comment_create(request):
-    serializer = CommentSerializer(data=request.data)
-    if serializer.is_valid(raise_exception=True):
-        serializer.save(user=request.user)
+    def get(self, request, pk, format=None):
+        review = self.get_object(pk)
+        comments = review.comments
+        serializer = CommentSerializer(comments, many=True)
         return Response(serializer.data)
