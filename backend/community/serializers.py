@@ -2,6 +2,11 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from .models import Movie, Review, Comment
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model
+        fields = '__all__'
+
 class MovieSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -22,10 +27,17 @@ class MovieDetailSerializer(MovieSerializer):
         ]
 
 class ReviewSerializer(serializers.ModelSerializer):
-    movie = MovieSerializer()
+    movie = MovieSerializer(required=False)
+    user = UserSerializer(required=False)
     class Meta:
         model = Review
-        fields = ('id', 'title', 'content', 'movie')
+        fields = ('id', 'title', 'content', 'movie', 'user')
+
+class MovieReviewsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = ('id', 'title', 'content')
+
 
 class CommentSerializer(serializers.ModelSerializer):
     # review = ReviewSerializer()
