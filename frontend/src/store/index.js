@@ -92,6 +92,20 @@ export default new Vuex.Store({
         })
         .catch((err) => console.log(err.response));
     },
+    deleteReview({ commit }, { moviePK, reviewPK }) {
+      axios
+        .delete(
+          API.DB_BASE + API.DB_ROUTES.reviewDetail(reviewPK)
+        )
+        .then(() => {
+          commit("SET_SELECTED_REVIEW", null);
+          router.push({
+            name: "MovieReviews",
+            params: { moviePK: moviePK },
+          });
+        })
+        .catch((err) => console.log(err.response));
+    },
     postAuthData({ commit }, info) {
       axios
         .post(API.DB_BASE + info.route, info.data)
@@ -115,7 +129,7 @@ export default new Vuex.Store({
       };
       dispatch("postAuthData", info);
     },
-    logout({ getters }) {
+    logout({ getters, commit }) {
       axios
         .post(
           API.DB_BASE + API.DB_ROUTES.logout,
@@ -123,7 +137,7 @@ export default new Vuex.Store({
           getters.config
         )
         .then(() => {
-          this.commit("SET_TOKEN", null);
+          commit("SET_TOKEN", null);
           cookies.remove("auth-token");
           router.push({ name: "Home" });
         })

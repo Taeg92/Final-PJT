@@ -13,28 +13,27 @@ import { mapState, mapActions } from "vuex";
 
 export default {
   name: "ReviewDetail",
-  data() {
-    return {
-      reviewPK: null
-    };
-  },
   computed: {
-    ...mapState(["selectedReview"])
+    ...mapState(["selectedReview"]),
+    reviewPK() {
+      return this.$route.params.reviewPK;
+    },
+    moviePK() {
+      return this.$route.params.moviePK;
+    }
   },
   methods: {
-    getReviewPK() {
-      this.reviewPK = this.$route.params.reviewPK;
-    },
     ...mapActions(["getReviewDetail"]),
     editReview() {
       console.log("click edit review button");
     },
     deleteReview() {
-      console.log("click delete review button");
+      this.$router.push(
+        `/movies/${this.moviePK}/reviews/${this.reviewPK}/delete`
+      );
     }
   },
   created() {
-    this.getReviewPK();
     this.getReviewDetail(this.reviewPK);
   }
 };
