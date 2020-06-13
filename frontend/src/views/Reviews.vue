@@ -1,7 +1,11 @@
 <template>
   <div class="reviews">
     <ul>
-      <li v-for="review in selectedMovieReviews" :key="review.pk">{{review.title}}</li>
+      <li
+        v-for="review in reviews"
+        :key="review.id"
+        @click="selectReview(review.movie.id, review.id)"
+      >{{review.title}}</li>
     </ul>
   </div>
 </template>
@@ -11,21 +15,15 @@ import { mapState, mapActions } from "vuex";
 
 export default {
   name: "Reviews",
-  data() {
-    return {
-      moviePK: null
-    };
-  },
-  computed: { ...mapState(["selectedMovieReviews"]) },
+  computed: { ...mapState(["reviews"]) },
   methods: {
-    getMoviePK() {
-      this.moviePK = this.$route.params.moviePK;
-    },
-    ...mapActions(["getMovieReviews"])
+    ...mapActions(["getReviews"]),
+    selectReview(moviePK, reviewPK) {
+      this.$router.push(`/movies/${moviePK}/reviews/${reviewPK}`);
+    }
   },
   created() {
-    this.getMoviePK();
-    this.getMovieReviews(this.moviePK);
+    this.getReviews();
   }
 };
 </script>

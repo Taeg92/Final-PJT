@@ -13,8 +13,10 @@ export default new Vuex.Store({
   state: {
     authToken: cookies.get("auth-token"),
     movies: [],
+    reviews: [],
     selectedMovie: null,
     selectedMovieReviews: [],
+    selectedReview: null,
   },
   getters: {
     isLoggedIn: (state) => !!state.authToken,
@@ -25,12 +27,12 @@ export default new Vuex.Store({
     }),
   },
   mutations: {
-    SET_MOVIES(state, movies) {
-      state.movies = movies;
-    },
     SET_TOKEN(state, token) {
       state.authToken = token;
       cookies.set("auth-token", token);
+    },
+    SET_MOVIES(state, movies) {
+      state.movies = movies;
     },
     SET_SELECTED_MOVIE(state, movie) {
       state.selectedMovie = movie;
@@ -40,6 +42,12 @@ export default new Vuex.Store({
     },
     CLEAR_SELECTED_MOVIE(state) {
       state.selectedMovie = null;
+    },
+    SET_REVIEWS(state, reviews) {
+      state.reviews = reviews;
+    },
+    SET_SELECTED_REVIEW(state, review) {
+      state.selectedReview = review;
     },
   },
   actions: {
@@ -60,12 +68,42 @@ export default new Vuex.Store({
     clearMovie({ commit }) {
       commit("CLEAR_SELECTED_MOVIE");
     },
+    getReviews({ commit }) {
+      axios
+        .get(API.DB_BASE + API.DB_ROUTES.reviews())
+        .then((res) => commit("SET_REVIEWS", res.data))
+        .catch((err) => console.log(err.response));
+    },
     getMovieReviews({ commit }, moviePK) {
       axios
         .get(API.DB_BASE + API.DB_ROUTES.reviews(moviePK))
         .then((res) =>
           commit("SET_SELECTED_MOVIE_REVIEWS", res.data)
         )
+        .catch((err) => console.log(err.response));
+    },
+    getReviewDetail({ commit }, reviewPK) {
+      axios
+        .get(
+          API.DB_BASE + API.DB_ROUTES.reviewDetail(reviewPK)
+        )
+        .then((res) => {
+          commit("SET_SELECTED_REVIEW", res.data);
+        })
+        .catch((err) => console.log(err.response));
+    },
+    deleteReview({ commit }, { moviePK, reviewPK }) {
+      axios
+        .delete(
+          API.DB_BASE + API.DB_ROUTES.reviewDetail(reviewPK)
+        )
+        .then(() => {
+          commit("SET_SELECTED_REVIEW", null);
+          router.push({
+            name: "MovieReviews",
+            params: { moviePK: moviePK },
+          });
+        })
         .catch((err) => console.log(err.response));
     },
     postAuthData({ commit }, info) {
@@ -91,7 +129,7 @@ export default new Vuex.Store({
       };
       dispatch("postAuthData", info);
     },
-    logout({ getters }) {
+    logout({ getters, commit }) {
       axios
         .post(
           API.DB_BASE + API.DB_ROUTES.logout,
@@ -99,7 +137,7 @@ export default new Vuex.Store({
           getters.config
         )
         .then(() => {
-          this.commit("SET_TOKEN", null);
+          commit("SET_TOKEN", null);
           cookies.remove("auth-token");
           router.push({ name: "Home" });
         })
