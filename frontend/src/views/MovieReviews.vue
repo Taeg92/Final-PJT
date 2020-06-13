@@ -4,9 +4,10 @@
       <li
         v-for="review in selectedMovieReviews"
         :key="review.id"
-        @click="selectReview(moviePK, review.id)"
+        @click="selectReview(review.id)"
       >{{review.title}}</li>
     </ul>
+    <button @click="createReview">리뷰 작성</button>
   </div>
 </template>
 
@@ -15,23 +16,29 @@ import { mapState, mapActions } from "vuex";
 
 export default {
   name: "MovieReviews",
-  data() {
-    return {
-      moviePK: null
-    };
+  computed: {
+    ...mapState(["selectedMovieReviews"]),
+    moviePK() {
+      return this.$route.params.moviePK;
+    }
   },
-  computed: { ...mapState(["selectedMovieReviews"]) },
   methods: {
-    getMoviePK() {
-      this.moviePK = this.$route.params.moviePK;
-    },
     ...mapActions(["getMovieReviews"]),
-    selectReview(moviePK, reviewPK) {
-      this.$router.push(`/movies/${moviePK}/reviews/${reviewPK}`);
+    selectReview(reviewPK) {
+      this.$router.push({
+        name: "ReviewDetail",
+        params: { moviePK: this.moviePK, reviewPK: reviewPK }
+      });
+    },
+    createReview() {
+      // url 접근시 에러남
+      this.$router.push({
+        name: "ReviewCreate",
+        params: { moviePK: this.moviePK }
+      });
     }
   },
   created() {
-    this.getMoviePK();
     this.getMovieReviews(this.moviePK);
   }
 };

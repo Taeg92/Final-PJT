@@ -9,6 +9,7 @@ import MovieReviews from "../views/MovieReviews.vue";
 import Reviews from "../views/Reviews.vue";
 import ReviewDetail from "../views/ReviewDetail.vue";
 import ReviewDelete from "../views/ReviewDelete.vue";
+import ReviewCreate from "../views/ReviewCreate.vue";
 import Comments from "../views/Comments.vue"
 import CommentCreate from "../views/CommentCreate.vue"
 // import ReviewCreate from "../views/ReviewCreate.vue";
@@ -62,6 +63,10 @@ const routes = [
     component: ReviewDelete,
   },
   {
+    path: "/movies/:moviePK/reviews/create",
+    name: "ReviewCreate",
+    component: ReviewCreate,
+  },
     path: '/comments',
     name: 'Comments',
     component: Comments,
