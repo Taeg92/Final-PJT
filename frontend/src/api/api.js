@@ -14,10 +14,12 @@ export default {
     },
     reviews: (moviePK) => {
       if (moviePK) {
-        return `community/movies/${moviePK}/reviews`;
+        return `community/movies/${moviePK}/reviews/`;
       } else {
-        return "community/reviews";
+        return "community/reviews/";
       }
     },
+    reviewDetail: (reviewPK) =>
+      `community/reviews/${reviewPK}/`,
   },
 };
