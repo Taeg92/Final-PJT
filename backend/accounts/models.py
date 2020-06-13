@@ -7,4 +7,3 @@ class User(AbstractUser):
     nickname = models.CharField(max_length=20, blank=True)
     avatar = models.URLField()
     followers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='followings')
-    

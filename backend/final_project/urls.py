@@ -6,5 +6,3 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('community/', include('community.urls')),
 ]
-
-
