@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'CommentEdit',
@@ -19,17 +19,26 @@ export default {
       editInfo: {
         commentPK: 1,
         commentData: {
-          content: this.$store.state.selectedComment.content,
+          content: null,
         }
       }
     }
   },
+  computed: {
+    ...mapState(['selectedComment'])
+  },
   methods: {
-    ...mapActions(["getCommentDetail", "putCommentDetail"])
+    ...mapActions(["getCommentDetail", "putCommentDetail"]),
+    changeInput() {
+      this.editInfo.commentData.content = this.$store.state.selectedComment.content
+    },
+  },
+  watch: {
+    'selectedComment': 'changeInput'
   },
   created() {
     this.getCommentDetail(1)
-  }
+  },
 }
 </script>
 
