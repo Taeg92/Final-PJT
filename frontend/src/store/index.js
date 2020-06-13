@@ -18,6 +18,7 @@ export default new Vuex.Store({
     selectedMovie: null,
     selectedMovieReviews: [],
     selectedReview: null,
+    selectedComment: null,
   },
   getters: {
     isLoggedIn: (state) => !!state.authToken,
@@ -52,7 +53,10 @@ export default new Vuex.Store({
     },
     SET_COMMENTS(state, comments) {
       state.comments = comments
-    }
+    },
+    SET_SELECTED_COMMENT(state, comment) {
+      state.selectedComment = comment
+    },
   },
   actions: {
     getMovies({ commit }) {
@@ -135,6 +139,26 @@ export default new Vuex.Store({
     createComment({ getters }, commentData) {
       axios
         .post(API.DB_BASE + API.DB_ROUTES.commentCreate(1), commentData, getters.config)
+        .then(() => {
+          router.push({ name: "Comments" });
+        })
+        .catch((err) => console.log(err.response));
+    },
+    getCommentDetail({ commit }, reviewPK) {
+      axios
+        .get(
+          API.DB_BASE + API.DB_ROUTES.comments(reviewPK)
+        )
+        .then((res) => {
+          commit("SET_SELECTED_COMMENT", res.data);
+        })
+        .catch((err) => console.log(err.response));
+    },
+    putCommentDetail(_ , {commentPK, commentData}) {
+      axios
+        .put(
+          API.DB_BASE + API.DB_ROUTES.comments(commentPK), commentData
+        )
         .then(() => {
           router.push({ name: "Comments" });
         })
