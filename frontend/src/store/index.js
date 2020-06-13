@@ -106,6 +106,19 @@ export default new Vuex.Store({
         })
         .catch((err) => console.log(err.response));
     },
+    submitReview({ getters }, { moviePK, reviewData }) {
+      axios
+        .post(
+          API.DB_BASE + API.DB_ROUTES.reviews(moviePK),
+          reviewData,
+          getters.config
+        )
+        .then((res) => {
+          console.log(res.data);
+          router.push({ name: "Home" });
+        })
+        .catch((err) => console.log(err.response));
+    },
     postAuthData({ commit }, info) {
       axios
         .post(API.DB_BASE + info.route, info.data)
