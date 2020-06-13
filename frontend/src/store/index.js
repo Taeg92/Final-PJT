@@ -14,6 +14,7 @@ export default new Vuex.Store({
     authToken: cookies.get("auth-token"),
     movies: [],
     reviews: [],
+    comments: [],
     selectedMovie: null,
     selectedMovieReviews: [],
     selectedReview: null,
@@ -49,6 +50,9 @@ export default new Vuex.Store({
     SET_SELECTED_REVIEW(state, review) {
       state.selectedReview = review;
     },
+    SET_COMMENTS(state, comments) {
+      state.comments = comments
+    }
   },
   actions: {
     getMovies({ commit }) {
@@ -103,6 +107,16 @@ export default new Vuex.Store({
             name: "MovieReviews",
             params: { moviePK: moviePK },
           });
+        })
+        .catch((err) => console.log(err.response));
+    },
+    getComments({ commit }) {
+      console.log("hi");
+      axios
+        .get(API.DB_BASE + API.DB_ROUTES.comments())
+        .then((res) => {
+          console.log(res.data)
+          commit("SET_COMMENTS", res.data)
         })
         .catch((err) => console.log(err.response));
     },

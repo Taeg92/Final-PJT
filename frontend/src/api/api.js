@@ -21,5 +21,12 @@ export default {
     },
     reviewDetail: (reviewPK) =>
       `community/reviews/${reviewPK}/`,
+    comments: (commentPK) => {
+      if (commentPK) {
+        return `community/comments/${commentPK}/`;
+      } else {
+        return "community/reviews/1/comments/";
+      }
+    },
   },
 };
