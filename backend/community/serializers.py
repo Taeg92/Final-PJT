@@ -50,4 +50,3 @@ class MovieReviewsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
         fields = ('id', 'title', 'content')
-
