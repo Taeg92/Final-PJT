@@ -74,7 +74,7 @@ class ReviewDetail(APIView):
     def put(self, request, pk, format=None):
         review = self.get_object(pk)
         serializer = ReviewDetailSerializer(review, data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -124,7 +124,7 @@ class ReviewComments(APIView):
         review = self.get_object(pk)
         serializer = CommentSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            serializer.save(review=review, user=request.user)
+            serializer.save(user=request.user, review=review)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -137,7 +137,6 @@ class ReviewComments(APIView):
         
 
 class CommentDetail(APIView):
-    # Comment CRUD 만들어라
     def get_object(self, pk):
         try:
             return Comment.objects.get(pk=pk)
@@ -153,7 +152,7 @@ class CommentDetail(APIView):
         comment = self.get_object(pk)
         serializer = CommentSerializer(comment, data=request.data)
         if serializer.is_valid():
-            serializer.save(user=requset.user)
+            serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

@@ -35,13 +35,14 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 class CommentSerializer(serializers.ModelSerializer):
     user = UserSerializer(required=False)
+    review = ReviewSerializer(required=False)
     class Meta:
         model = Comment
-        fields = ('id', 'content', 'user')
+        fields = ('id', 'content', 'user', 'review')
 
 class ReviewDetailSerializer(ReviewSerializer):
     reiview_comments = Review.comments
-    comments = CommentSerializer(reiview_comments, many=True)
+    comments = CommentSerializer(reiview_comments, required=False, many=True)
     class Meta(ReviewSerializer.Meta):
         fields = ReviewSerializer.Meta.fields + ['comments']
 
