@@ -28,5 +28,8 @@ export default {
         return "community/reviews/1/comments/";
       }
     },
+    commentCreate(reviewPK) {
+      return `community/reviews/${reviewPK}/comments/`
+    },
   },
 };

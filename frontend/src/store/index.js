@@ -120,6 +120,14 @@ export default new Vuex.Store({
         })
         .catch((err) => console.log(err.response));
     },
+    createComment({ getters }, commentData) {
+      axios
+        .post(API.DB_BASE + API.DB_ROUTES.commentCreate(1), commentData, getters.config)
+        .then(() => {
+          router.push({ name: "Comments" });
+        })
+        .catch((err) => console.log(err.response));
+    },
     postAuthData({ commit }, info) {
       axios
         .post(API.DB_BASE + info.route, info.data)
