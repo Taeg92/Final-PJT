@@ -4,8 +4,8 @@ from .models import Movie, Review, Comment
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = get_user_model()
-        fields = ['username']
+        model = get_user_model
+        fields = '__all__'
 
 class MovieSerializer(serializers.ModelSerializer):
 
@@ -49,4 +49,16 @@ class ReviewDetailSerializer(ReviewSerializer):
 class MovieReviewsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
+<<<<<<< HEAD
         fields = ('id', 'title', 'content')
+=======
+        fields = ('id', 'title', 'content')
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    # review = ReviewSerializer()
+    # user = get_user_model()
+    class Meta:
+        model = Comment
+        fields = ('id', 'content', 'review')
+>>>>>>> 7f5645863bf244dacdf8b16cfe05ecdac6bec47b
