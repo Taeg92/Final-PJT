@@ -49,6 +49,9 @@ class ReviewDetailSerializer(ReviewSerializer):
 class MovieReviewsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
+<<<<<<< HEAD
+        fields = ('id', 'title', 'content')
+=======
         fields = ('id', 'title', 'content')
 
 
@@ -58,3 +61,4 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ('id', 'content', 'review')
+>>>>>>> 7f5645863bf244dacdf8b16cfe05ecdac6bec47b
