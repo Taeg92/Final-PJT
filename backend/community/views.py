@@ -58,6 +58,32 @@ class ReviewList(APIView):
         serializer = ReviewSerializer(reviews, many=True)
         return Response(serializer.data)
 
+class ReviewDetail(APIView):
+    
+    def get_object(self, pk):
+        try:
+            return Review.objects.get(pk=pk)
+        except Review.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        review = self.get_object(pk)
+        serializer = ReviewDetailSerializer(review)
+        return Response(serializer.data)
+    
+    def put(self, request, pk, format=None):
+        review = self.get_object(pk)
+        serializer = ReviewDetailSerializer(review, data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        review = self.get_object(pk)
+        review.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 class MovieReviews(APIView):
     
     def get_object(self, pk):
@@ -76,23 +102,49 @@ class MovieReviews(APIView):
         movie = self.get_object(pk)
         serializer = ReviewSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            serializer.user = request.user
-            serializer.movie = movie
-            serializer.save()
-            return Response(serializer.sdata, status=status.HTTP_201_CREATED)
+            serializer.save(movie=movie, user=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class ReviewComments(APIView):
+    
+    def get_object(self, pk):
+        try:
+            return Review.objects.get(pk=pk)
+        except Review.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        review = self.get_object(pk)
+        comments = review.comments
+        serializer = CommentSerializer(comments, many=True)
+        return Response(serializer.data)
+    
+    def post(self, request, pk, format=None):
+        review = self.get_object(pk)
+        serializer = CommentSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(user=request.user, review=review)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET'])
-def comment_list(request):
-    comments = Comment.objects.all()
-    serializer = CommentSerializer(comments, many=True)
-    return Response(serializer.data)
+class CommentDetail(APIView):
+    def get_object(self, pk):
+        try:
+            return Comment.objects.get(pk=pk)
+        except Comment.DoesNotExist:
+            raise Http404
 
-@api_view(['POST'])
-# @permission_classes([IsAuthenticated])
-def comment_create(request):
-    serializer = CommentSerializer(data=request.data)
-    if serializer.is_valid(raise_exception=True):
-        serializer.save(user=request.user)
+    def get(self, request, pk, format=None):
+        comment = self.get_object(pk)
+        serializer = CommentSerializer(comment)
         return Response(serializer.data)
+    
+    def put(self, request, pk, format=None):
+        comment = self.get_object(pk)
+        serializer = CommentSerializer(comment, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
