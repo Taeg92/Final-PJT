@@ -12,6 +12,7 @@ import ReviewDelete from "../views/ReviewDelete.vue";
 import ReviewCreate from "../views/ReviewCreate.vue";
 import Comments from "../views/Comments.vue"
 import CommentCreate from "../views/CommentCreate.vue"
+import CommentEdit from "../views/CommentEdit.vue"
 // import ReviewCreate from "../views/ReviewCreate.vue";
 
 Vue.use(VueRouter);
@@ -67,6 +68,7 @@ const routes = [
     name: "ReviewCreate",
     component: ReviewCreate,
   },
+  {
     path: '/comments',
     name: 'Comments',
     component: Comments,
@@ -76,6 +78,11 @@ const routes = [
     name: 'CommentCreate',
     component: CommentCreate,
   },
+  {
+    path: '/comment/1/edit',
+    name: 'CommentEdit',
+    component: CommentEdit,
+  }
   // component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
 ];
 
