@@ -175,14 +175,12 @@ export default new Vuex.Store({
         .catch((err) => console.log(err.response));
     },
     getCommentDetail({ commit }, reviewPK) {
-      console.log('데이터 가져올게요')
       axios
         .get(
           API.DB_BASE + API.DB_ROUTES.comments(reviewPK)
         )
         .then((res) => {
           commit("SET_SELECTED_COMMENT", res.data);
-          console.log('데이터 가져왔어요!')
         })
         .catch((err) => console.log(err.response));
     },
@@ -190,6 +188,16 @@ export default new Vuex.Store({
       axios
         .put(
           API.DB_BASE + API.DB_ROUTES.comments(commentPK), commentData
+        )
+        .then(() => {
+          router.push({ name: "Comments" });
+        })
+        .catch((err) => console.log(err.response));
+    },
+    deleteCommentDetail(_ , commentPK) {
+      axios
+        .delete(
+          API.DB_BASE + API.DB_ROUTES.comments(commentPK)
         )
         .then(() => {
           router.push({ name: "Comments" });
