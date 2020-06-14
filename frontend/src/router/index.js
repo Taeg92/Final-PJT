@@ -10,9 +10,9 @@ import Reviews from "../views/Reviews.vue";
 import ReviewDetail from "../views/ReviewDetail.vue";
 import ReviewDelete from "../views/ReviewDelete.vue";
 import ReviewCreate from "../views/ReviewCreate.vue";
-import Comments from "../views/Comments.vue"
-import CommentCreate from "../views/CommentCreate.vue"
-// import ReviewCreate from "../views/ReviewCreate.vue";
+import ReviewEdit from "../views/ReviewEdit.vue";
+import Comments from "../views/Comments.vue";
+import CommentCreate from "../views/CommentCreate.vue";
 
 Vue.use(VueRouter);
 
@@ -67,13 +67,19 @@ const routes = [
     name: "ReviewCreate",
     component: ReviewCreate,
   },
-    path: '/comments',
-    name: 'Comments',
+  {
+    path: "/movies/:moviePK/reviews/:reviewPK/Edit",
+    name: "ReviewEdit",
+    component: ReviewEdit,
+  },
+  {
+    path: "/comments",
+    name: "Comments",
     component: Comments,
   },
   {
-    path: '/comment/create',
-    name: 'CommentCreate',
+    path: "/comment/create",
+    name: "CommentCreate",
     component: CommentCreate,
   },
   // component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')

@@ -1,6 +1,7 @@
 <template>
   <div v-if="selectedReview" class="review-detail">
     <div>{{selectedReview.title}}</div>
+    <p>{{ selectedReview.content }}</p>
     <div>
       <button @click="editReview">수정하기</button>
       <button @click="deleteReview">삭제하기</button>
@@ -25,7 +26,10 @@ export default {
   methods: {
     ...mapActions(["getReviewDetail"]),
     editReview() {
-      console.log("click edit review button");
+      this.$router.push({
+        name: "ReviewEdit",
+        params: { moviePK: this.moviePK, reviewPK: this.reviewPK }
+      });
     },
     deleteReview() {
       this.$router.push({
