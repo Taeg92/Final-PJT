@@ -132,6 +132,28 @@ export default new Vuex.Store({
         })
         .catch((err) => console.log(err.response));
     },
+    submitReviewEdit(
+      { getters },
+      { moviePK, reviewPK, reviewData }
+    ) {
+      axios
+        .put(
+          API.DB_BASE +
+            API.DB_ROUTES.reviewDetail(reviewPK),
+          reviewData,
+          getters.config
+        )
+        .then(() => {
+          router.push({
+            name: "ReviewDetail",
+            params: {
+              moviePK: moviePK,
+              reviewPK: reviewPK,
+            },
+          });
+        })
+        .catch((err) => console.log(err.response));
+    },
     getComments({ commit }) {
       axios
         .get(API.DB_BASE + API.DB_ROUTES.comments())
