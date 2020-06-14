@@ -51,8 +51,8 @@ export default new Vuex.Store({
       state.selectedReview = review;
     },
     SET_COMMENTS(state, comments) {
-      state.comments = comments
-    }
+      state.comments = comments;
+    },
   },
   actions: {
     getMovies({ commit }) {
@@ -110,7 +110,6 @@ export default new Vuex.Store({
         })
         .catch((err) => console.log(err.response));
     },
-
     submitReview({ getters }, { moviePK, reviewData }) {
       axios
         .post(
@@ -118,8 +117,14 @@ export default new Vuex.Store({
           reviewData,
           getters.config
         )
-        .then(() => {
-          router.push({ name: "Home" });
+        .then((res) => {
+          router.push({
+            name: "ReviewDetail",
+            params: {
+              moviePK: moviePK,
+              reviewPK: res.data.id,
+            },
+          });
         })
         .catch((err) => console.log(err.response));
     },
@@ -127,14 +132,17 @@ export default new Vuex.Store({
       axios
         .get(API.DB_BASE + API.DB_ROUTES.comments())
         .then((res) => {
-          console.log(res.data)
-          commit("SET_COMMENTS", res.data)
+          commit("SET_COMMENTS", res.data);
         })
         .catch((err) => console.log(err.response));
     },
     createComment({ getters }, commentData) {
       axios
-        .post(API.DB_BASE + API.DB_ROUTES.commentCreate(1), commentData, getters.config)
+        .post(
+          API.DB_BASE + API.DB_ROUTES.commentCreate(1),
+          commentData,
+          getters.config
+        )
         .then(() => {
           router.push({ name: "Comments" });
         })
