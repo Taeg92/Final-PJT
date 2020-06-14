@@ -12,12 +12,10 @@ import { mapState, mapActions } from "vuex";
 
 export default {
   name: "MovieDetail",
-  data() {
-    return {
-      moviePK: null
-    };
-  },
   computed: {
+    moviePK() {
+      return this.$route.params.moviePK;
+    },
     ...mapState(["selectedMovie"]),
     poster_path() {
       return (
@@ -26,16 +24,20 @@ export default {
     }
   },
   methods: {
-    getMoviePK() {
-      this.moviePK = this.$route.params.moviePK;
-    },
     ...mapActions(["getMovieDetail"]),
     showReviews() {
-      this.$router.push(`/movies/${this.moviePK}/reviews`);
+      this.$router.push({
+        name: "MovieReviews",
+        params: { moviePK: this.moviePK }
+      });
+    }
+  },
+  watch: {
+    moviePK() {
+      this.getMovieDetail(this.moviePK);
     }
   },
   created() {
-    this.getMoviePK();
     this.getMovieDetail(this.moviePK);
   }
 };

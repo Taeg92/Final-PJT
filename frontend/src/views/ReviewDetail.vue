@@ -28,9 +28,15 @@ export default {
       console.log("click edit review button");
     },
     deleteReview() {
-      this.$router.push(
-        `/movies/${this.moviePK}/reviews/${this.reviewPK}/delete`
-      );
+      this.$router.push({
+        name: "ReviewDelete",
+        params: { moviePK: this.moviePK, reviewPK: this.reviewPK }
+      });
+    }
+  },
+  watch: {
+    reviewPK() {
+      this.getReviewDetail(this.reviewPK);
     }
   },
   created() {
