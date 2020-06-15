@@ -18,9 +18,9 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 body {
-  background-color: black !important;
+  background-color: black;
 }
 
 #app {
