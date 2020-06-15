@@ -11,10 +11,11 @@ from rest_framework import status
 from rest_framework import mixins
 from rest_framework import generics
 
+
 class MovieList(APIView):
 
     def get(self, request, format=None):
-        movies = Movie.objects.all()
+        movies = Movie.objects.all()[:10]
         serializer = MovieSerializer(movies, many=True)
         return Response(serializer.data)
 
@@ -25,8 +26,9 @@ class MovieList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class MovieDetail(APIView):
-    
+
     def get_object(self, pk):
         try:
             return Movie.objects.get(pk=pk)
@@ -51,15 +53,17 @@ class MovieDetail(APIView):
     #     snippet.delete()
     #     return Response(status=status.HTTP_204_NO_CONTENT)
 
+
 class ReviewList(APIView):
-    
+
     def get(self, request, format=None):
         reviews = Review.objects.all()
         serializer = ReviewDetailSerializer(reviews, many=True)
         return Response(serializer.data)
 
+
 class ReviewDetail(APIView):
-    
+
     def get_object(self, pk):
         try:
             return Review.objects.get(pk=pk)
@@ -70,7 +74,7 @@ class ReviewDetail(APIView):
         review = self.get_object(pk)
         serializer = ReviewDetailSerializer(review)
         return Response(serializer.data)
-    
+
     def put(self, request, pk, format=None):
         review = self.get_object(pk)
         serializer = ReviewDetailSerializer(review, data=request.data)
@@ -84,8 +88,9 @@ class ReviewDetail(APIView):
         review.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
 class MovieReviews(APIView):
-    
+
     def get_object(self, pk):
         try:
             return Movie.objects.get(pk=pk)
@@ -97,7 +102,7 @@ class MovieReviews(APIView):
         reviews = movie.reviews
         serializer = MovieReviewsSerializer(reviews, many=True)
         return Response(serializer.data)
-    
+
     def post(self, request, pk, format=None):
         movie = self.get_object(pk)
         serializer = ReviewSerializer(data=request.data)
@@ -106,8 +111,9 @@ class MovieReviews(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class ReviewComments(APIView):
-    
+
     def get_object(self, pk):
         try:
             return Review.objects.get(pk=pk)
@@ -119,7 +125,7 @@ class ReviewComments(APIView):
         comments = review.comments
         serializer = CommentSerializer(comments, many=True)
         return Response(serializer.data)
-    
+
     def post(self, request, pk, format=None):
         review = self.get_object(pk)
         serializer = CommentSerializer(data=request.data)
@@ -129,12 +135,12 @@ class ReviewComments(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # class CommentList(APIView):
-    
+
 #     def get(self, request, format=None):
 #         comments = Comment.objects.all()
 #         serializer = CommentSerializer(comments, many=True)
 #         return Response(serializer.data)
-        
+
 
 class CommentDetail(APIView):
     def get_object(self, pk):
@@ -147,7 +153,7 @@ class CommentDetail(APIView):
         comment = self.get_object(pk)
         serializer = CommentSerializer(comment)
         return Response(serializer.data)
-    
+
     def put(self, request, pk, format=None):
         comment = self.get_object(pk)
         serializer = CommentSerializer(comment, data=request.data)
