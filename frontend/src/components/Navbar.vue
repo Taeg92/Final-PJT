@@ -1,9 +1,11 @@
 <template>
-  <div class="navbar" id="nav">
-    <router-link to="/">Home</router-link>|
-    <router-link v-if="!isLoggedIn" to="/signup">signup</router-link>|
-    <router-link v-if="!isLoggedIn" to="/login">login</router-link>|
-    <router-link v-if="isLoggedIn" to="/logout">logout</router-link>
+  <div id="nav" class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom shadow-sm">
+    <router-link class="navbar-logo my-0 mr-md-auto font-weight-normal" to="/">Movie</router-link>
+    <nav class="my-2 my-md-0 mr-md-3">
+      <router-link class="p-2 text-light" v-if="!isLoggedIn" to="/login">Login</router-link>
+      <router-link class="p-2 text-light" v-if="isLoggedIn" to="/logout">Logout</router-link>
+    </nav>
+    <router-link class="btn btn-danger text-light" v-if="!isLoggedIn" to="/signup">Sign up</router-link>
   </div>
 </template>
 
@@ -18,5 +20,17 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+#nav {
+  background: black;
+}
+
+#nav a {
+  text-decoration: none;
+  font-weight: bold;
+  color: #E50A13
+}
+
+#nav a.router-link-exact-active {
+}
 </style>
