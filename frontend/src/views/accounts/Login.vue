@@ -20,11 +20,11 @@
       <small><span class="text-muted d-block mt-1 mb-5">비밀번호를 입력해주세요.</span></small>
     </div>
     <button class="font-weight-bold btn-danger form-control mb-5" @click="login(loginData)">로그인</button>
-      <p class=text-muted>
-        회원이 아닌가요? <router-link class="text-light font-weight-bold" to="/signup">지금 가입하세요.</router-link>
-        <br>
-        <small>이 페이지는 Google reCAPTCHA의 보호를 받아 사용자가 로봇이 아님을 확인합니다. 자세히 알아보기</small>
-      </p>
+    <p class="text-muted mt-3">
+      회원이 아닌가요? <router-link class="text-light font-weight-bold" to="/signup">지금 가입하세요.</router-link>
+      <br>
+      <small>이 페이지는 Google reCAPTCHA의 보호를 받아 사용자가 로봇이 아님을 확인합니다. 자세히 알아보기</small>
+    </p>
   </div>
 </template>
 
