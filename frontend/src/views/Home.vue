@@ -1,6 +1,18 @@
 <template>
   <div class="home">
-    <Poster v-for="movie in movies" :key="movie.id" :movie="movie" />
+    <div class="poster-container">
+      <Poster
+        v-for="movie in movies"
+        :key="movie.id"
+        :movie="movie"
+      />
+    </div>
+    <div class="arrow left-arrow">
+      <i class="fas fa-chevron-circle-left"></i>
+    </div>
+    <div class="arrow right-arrow">
+      <i class="fas fa-chevron-circle-right"></i>
+    </div>
   </div>
 </template>
 
@@ -8,26 +20,86 @@
 import Poster from "../components/Poster";
 import { mapState, mapActions } from "vuex";
 
+const init = function() {
+  const posterContainer = document.querySelector(
+    ".poster-container"
+  );
+  const leftArrow = document.querySelector(".left-arrow");
+  const rightArrow = document.querySelector(".right-arrow");
+
+  const sideScroll = function(
+    element,
+    direction,
+    speed,
+    distance,
+    step
+  ) {
+    let scrollAmount = 0;
+    const slideTimer = setInterval(function() {
+      if (direction == "left") {
+        element.scrollLeft -= step;
+      } else {
+        element.scrollLeft += step;
+      }
+      scrollAmount += step;
+      if (scrollAmount >= distance) {
+        window.clearInterval(slideTimer);
+      }
+    }, speed);
+  };
+
+  const moveToLeft = function() {
+    sideScroll(posterContainer, "right", 50, 100, 365);
+  };
+
+  const moveToRight = function() {
+    sideScroll(posterContainer, "left", 25, 100, 365);
+  };
+
+  leftArrow.addEventListener("click", moveToLeft);
+  rightArrow.addEventListener("click", moveToRight);
+};
+
+window.addEventListener("load", init);
+
 export default {
   name: "Home",
   components: {
-    Poster
+    Poster,
   },
   computed: {
-    ...mapState(["movies"])
+    ...mapState(["movies"]),
   },
   methods: {
-    ...mapActions(["getMovies"])
+    ...mapActions(["getMovies"]),
   },
   created() {
     this.getMovies();
-  }
+  },
 };
 </script>
 
 <style scoped>
-.home {
+.poster-container {
   display: flex;
-  flex-wrap: wrap;
+  /* overflow: hidden; */
+  overflow: scroll;
+  padding-top: 40px;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  font-size: 40px;
+  color: white;
+  opacity: 0.9;
+}
+
+.left-arrow {
+  left: 20px;
+}
+
+.right-arrow {
+  right: 20px;
 }
 </style>
