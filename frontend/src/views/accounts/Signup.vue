@@ -1,20 +1,39 @@
 <template>
-  <div class="signup">
+  <div class="signup container">
+    <h2 class="text-light font-weight-bold mb-4">회원 가입</h2>
     <div>
-      <label for="username">username</label>
-      <input id="username" v-model="signupData.username" type="text" />
+      <input
+        class="form-control"
+        id="username"
+        v-model="signupData.username"
+        type="text"
+      />
+      <small><span class="text-muted d-block my-1">아이디를 입력해주세요.</span></small>
     </div>
     <div>
-      <label for="password1">password</label>
-      <input id="password1" v-model="signupData.password1" type="password" />
+      <input
+        class="form-control"
+        id="password1"
+        v-model="signupData.password1"
+        type="password"
+      />
+      <small><span class="text-muted d-block mt-1">비밀번호를 입력해주세요.</span></small>
     </div>
     <div>
-      <label for="password2">password</label>
-      <input id="password2" v-model="signupData.password2" type="password" />
+      <input
+        class="form-control"
+        id="password2"
+        v-model="signupData.password2"
+        type="password"
+      />
+      <small><span class="text-muted d-block mt-1 mb-5">비밀번호를 한번 더 입력해주세요.</span></small>
     </div>
-    <div>
-      <button @click="signup(signupData)">Signup</button>
-    </div>
+    <button class="form-control btn-danger" @click="signup(signupData)">회원 가입</button>
+    <p class="text-muted mt-3">
+      이미 가입한 회원이신가요? <router-link class="text-light font-weight-bold" to="/login">로그인하기.</router-link>
+      <br>
+      <small>이 페이지는 Google reCAPTCHA의 보호를 받아 사용자가 로봇이 아님을 확인합니다. 자세히 알아보기</small>
+    </p>
   </div>
 </template>
 
@@ -38,4 +57,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.signup {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 50px;
+  height: 600px;
+  width: 400px;
+  border-radius: 5px;
+}
+</style>
