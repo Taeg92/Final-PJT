@@ -44,6 +44,7 @@ export default {
   -webkit-box-shadow: 5px 6px 19px -7px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 5px 6px 19px -7px rgba(0, 0, 0, 0.75);
   box-shadow: 5px 6px 19px -7px rgba(0, 0, 0, 0.75);
+  cursor: pointer;
 }
 
 .poster:hover {

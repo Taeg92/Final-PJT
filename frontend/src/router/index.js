@@ -5,7 +5,7 @@ import MovieDetail from "../views/MovieDetail.vue";
 import Signup from "../views/accounts/Signup.vue";
 import Login from "../views/accounts/Login.vue";
 import Logout from "../views/accounts/Logout.vue";
-import MovieReviews from "../views/MovieReviews.vue";
+// import MovieReviews from "../views/MovieReviews.vue";
 import Reviews from "../views/Reviews.vue";
 import ReviewDetail from "../views/ReviewDetail.vue";
 import ReviewDelete from "../views/ReviewDelete.vue";
@@ -13,8 +13,8 @@ import ReviewCreate from "../views/ReviewCreate.vue";
 import ReviewEdit from "../views/ReviewEdit.vue";
 import Comments from "../views/Comments.vue";
 import CommentCreate from "../views/CommentCreate.vue";
-import CommentEdit from "../views/CommentEdit.vue"
-import CommentDelete from "../views/CommentDelete.vue"
+import CommentEdit from "../views/CommentEdit.vue";
+import CommentDelete from "../views/CommentDelete.vue";
 
 Vue.use(VueRouter);
 
@@ -49,11 +49,11 @@ const routes = [
     name: "Reviews",
     component: Reviews,
   },
-  {
-    path: "/movies/:moviePK/reviews",
-    name: "MovieReviews",
-    component: MovieReviews,
-  },
+  // {
+  //   path: "/movies/:moviePK/reviews",
+  //   name: "MovieReviews",
+  //   component: MovieReviews,
+  // },
   {
     path: "/movies/:moviePK/reviews/:reviewPK",
     name: "ReviewDetail",
@@ -75,8 +75,8 @@ const routes = [
     component: ReviewEdit,
   },
   {
-    path: '/comments',
-    name: 'Comments',
+    path: "/comments",
+    name: "Comments",
     component: Comments,
   },
   {
@@ -85,13 +85,13 @@ const routes = [
     component: CommentCreate,
   },
   {
-    path: '/comment/1/edit',
-    name: 'CommentEdit',
+    path: "/comment/1/edit",
+    name: "CommentEdit",
     component: CommentEdit,
   },
   {
-    path: '/comment/:commentPK/delete',
-    name: 'CommentDelete',
+    path: "/comment/:commentPK/delete",
+    name: "CommentDelete",
     component: CommentDelete,
   },
   // component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')

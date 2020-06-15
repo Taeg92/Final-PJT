@@ -21,6 +21,7 @@ export default {
 <style>
 body {
   background-color: black !important;
+  color: #f2f2f2 !important;
 }
 
 #app {
