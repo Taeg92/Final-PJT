@@ -7,7 +7,7 @@ import Login from "../views/accounts/Login.vue";
 import Logout from "../views/accounts/Logout.vue";
 // import MovieReviews from "../views/MovieReviews.vue";
 import Reviews from "../views/Reviews.vue";
-import ReviewDetail from "../views/ReviewDetail.vue";
+// import ReviewDetail from "../views/ReviewDetail.vue";
 import ReviewDelete from "../views/ReviewDelete.vue";
 import ReviewCreate from "../views/ReviewCreate.vue";
 import ReviewEdit from "../views/ReviewEdit.vue";
@@ -57,7 +57,7 @@ const routes = [
   {
     path: "/movies/:moviePK/reviews/:reviewPK",
     name: "ReviewDetail",
-    component: ReviewDetail,
+    component: MovieDetail,
   },
   {
     path: "/movies/:moviePK/reviews/:reviewPK/delete",

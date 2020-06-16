@@ -114,13 +114,15 @@ export default {
     },
     $route() {
       this.isDetailMoreActive =
-        this.$route.name === "MovieReviews";
+        this.$route.name === "MovieReviews" ||
+        this.$route.name === "ReviewDetail";
     },
   },
   created() {
     this.getMovieDetail(this.moviePK);
     this.isDetailMoreActive =
-      this.$route.name === "MovieReviews";
+      this.$route.name === "MovieReviews" ||
+      this.$route.name === "ReviewDetail";
   },
 };
 </script>
