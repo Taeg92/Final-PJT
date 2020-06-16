@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
+from .permissions import IsSuperUser
 from .models import Movie, Review, Comment
 from .serializers import MovieSerializer, MovieDetailSerializer, ReviewSerializer, CommentSerializer, MovieReviewsSerializer, ReviewDetailSerializer
 
@@ -18,13 +19,20 @@ class MovieList(APIView):
         movies = Movie.objects.all()[:10]
         serializer = MovieSerializer(movies, many=True)
         return Response(serializer.data)
-
+    
+    @permission_classes([IsSuperUser])
     def post(self, request, format=None):
         serializer = MovieSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    @permission_classes([IsSuperUser])
+    def delete(self, request, pk, format=None):
+        movie = get_object_or_404(Movie, pk=pk)
+        movie.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class MovieDetail(APIView):
@@ -75,16 +83,22 @@ class ReviewDetail(APIView):
         serializer = ReviewDetailSerializer(review)
         return Response(serializer.data)
 
+    @permission_classes([IsAuthenticated])
     def put(self, request, pk, format=None):
         review = self.get_object(pk)
         serializer = ReviewDetailSerializer(review, data=request.data)
+        if request.user != review.user:
+            return Response(status=status.HTTP_403_FORBIDDEN)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    @permission_classes([IsAuthenticated])
     def delete(self, request, pk, format=None):
         review = self.get_object(pk)
+        if request.user != review.user:
+            return Response(status=status.HTTP_403_FORBIDDEN)
         review.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -103,6 +117,7 @@ class MovieReviews(APIView):
         serializer = ReviewSerializer(reviews, many=True)
         return Response(serializer.data)
 
+    @permission_classes([IsAuthenticated])
     def post(self, request, pk, format=None):
         movie = self.get_object(pk)
         serializer = ReviewSerializer(data=request.data)
@@ -126,6 +141,7 @@ class ReviewComments(APIView):
         serializer = CommentSerializer(comments, many=True)
         return Response(serializer.data)
 
+    @permission_classes([IsAuthenticated])
     def post(self, request, pk, format=None):
         review = self.get_object(pk)
         serializer = CommentSerializer(data=request.data)
@@ -154,15 +170,21 @@ class CommentDetail(APIView):
         serializer = CommentSerializer(comment)
         return Response(serializer.data)
 
+    @permission_classes([IsAuthenticated])
     def put(self, request, pk, format=None):
         comment = self.get_object(pk)
         serializer = CommentSerializer(comment, data=request.data)
+        if request.user != comment.user:
+            return Response(status=status.HTTP_403_FORBIDDEN)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    @permission_classes([IsAuthenticated])
     def delete(self, request, pk, format=None):
         comment = self.get_object(pk)
+        if request.user != comment.user:
+            return Response(status=status.HTTP_403_FORBIDDEN)
         comment.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
