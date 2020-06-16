@@ -5,16 +5,16 @@ import MovieDetail from "../views/MovieDetail.vue";
 import Signup from "../views/accounts/Signup.vue";
 import Login from "../views/accounts/Login.vue";
 import Logout from "../views/accounts/Logout.vue";
-import MovieReviews from "../views/MovieReviews.vue";
+// import MovieReviews from "../views/MovieReviews.vue";
 import Reviews from "../views/Reviews.vue";
-import ReviewDetail from "../views/ReviewDetail.vue";
+// import ReviewDetail from "../views/ReviewDetail.vue";
 import ReviewDelete from "../views/ReviewDelete.vue";
 import ReviewCreate from "../views/ReviewCreate.vue";
 import ReviewEdit from "../views/ReviewEdit.vue";
 import Comments from "../views/Comments.vue";
 import CommentCreate from "../views/CommentCreate.vue";
-import CommentEdit from "../views/CommentEdit.vue"
-import CommentDelete from "../views/CommentDelete.vue"
+import CommentEdit from "../views/CommentEdit.vue";
+import CommentDelete from "../views/CommentDelete.vue";
 
 Vue.use(VueRouter);
 
@@ -37,12 +37,12 @@ const routes = [
   {
     path: "/movies/:moviePK(\\d+)/reviews/:reviewPK(\\d+)",
     name: "ReviewDetail",
-    component: ReviewDetail,
+    component: MovieDetail,
   },
   {
     path: "/movies/:moviePK(\\d+)/reviews",
     name: "MovieReviews",
-    component: MovieReviews,
+    component: MovieDetail,
   },
   {
     path: "/movies/:moviePK(\\d+)",
@@ -65,8 +65,8 @@ const routes = [
     component: CommentCreate,
   },
   {
-    path: '/comment/1/edit',
-    name: 'CommentEdit',
+    path: "/comment/1/edit",
+    name: "CommentEdit",
     component: CommentEdit,
   },
   {
