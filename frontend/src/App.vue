@@ -20,7 +20,6 @@ export default {
 
 <style scoped>
 #app {
-  background-color: black !important;
   color: #f2f2f2 !important;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
