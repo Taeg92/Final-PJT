@@ -49,11 +49,11 @@ const routes = [
     name: "Reviews",
     component: Reviews,
   },
-  // {
-  //   path: "/movies/:moviePK/reviews",
-  //   name: "MovieReviews",
-  //   component: MovieReviews,
-  // },
+  {
+    path: "/movies/:moviePK/reviews",
+    name: "MovieReviews",
+    component: MovieDetail,
+  },
   {
     path: "/movies/:moviePK/reviews/:reviewPK",
     name: "ReviewDetail",

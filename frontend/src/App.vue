@@ -18,13 +18,10 @@ export default {
 };
 </script>
 
-<style>
-body {
+<style scoped>
+#app {
   background-color: black !important;
   color: #f2f2f2 !important;
-}
-
-#app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

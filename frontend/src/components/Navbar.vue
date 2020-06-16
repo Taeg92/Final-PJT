@@ -44,7 +44,6 @@ export default {
 
 <style scoped>
 #nav {
-  background: black;
   -webkit-box-shadow: 0px -1px 25px 3px rgba(255, 255, 255, 0.1) !important;
   -moz-box-shadow: 0px -1px 25px 3px rgba(255, 255, 255, 0.1) !important;
   box-shadow: 0px -1px 25px 3px rgba(255, 255, 255, 0.1) !important;

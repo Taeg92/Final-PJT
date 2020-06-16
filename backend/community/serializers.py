@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
-from .models import Movie, Review, Comment
+from .models import Movie, Review, Comment, Genre
+from django.utils import timezone
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -13,8 +14,24 @@ class MovieSerializer(serializers.ModelSerializer):
         model = Movie
         fields = ['id', 'title', 'poster_path']
 
+class GenreSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Genre
+        fields = ['name']
+
+class ReviewSerializer(serializers.ModelSerializer):
+    movie = MovieSerializer(required=False)
+    user = UserSerializer(required=False)
+    created_at = serializers.DateTimeField(format="%Y년 %m월 %d일 %H:%M:%S", required=False)
+    class Meta:
+        model = Review
+        fields = ['id', 'title', 'content', 'movie', 'user', 'created_at']
+
 class MovieDetailSerializer(MovieSerializer):
     reviews = Movie.reviews
+    reviews = ReviewSerializer(reviews, many=True, required=False)
+    genres = Movie.genres
+    genres = GenreSerializer(genres, many=True, required=False)
     class Meta(MovieSerializer.Meta):
         fields = MovieSerializer.Meta.fields + [
             'release_date',
@@ -25,13 +42,6 @@ class MovieDetailSerializer(MovieSerializer):
             'adult',
             'reviews',
         ]
-
-class ReviewSerializer(serializers.ModelSerializer):
-    movie = MovieSerializer(required=False)
-    user = UserSerializer(required=False)
-    class Meta:
-        model = Review
-        fields = ['id', 'title', 'content', 'movie', 'user']
 
 class CommentSerializer(serializers.ModelSerializer):
     user = UserSerializer(required=False)
