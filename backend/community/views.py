@@ -100,7 +100,7 @@ class MovieReviews(APIView):
     def get(self, request, pk, format=None):
         movie = self.get_object(pk)
         reviews = movie.reviews
-        serializer = MovieReviewsSerializer(reviews, many=True)
+        serializer = ReviewSerializer(reviews, many=True)
         return Response(serializer.data)
 
     def post(self, request, pk, format=None):
