@@ -49,7 +49,7 @@
           <!-- <Reviews :reviews="selectedMovie.reviews" /> -->
           <Reviews />
         </div>
-        <div class="review-create-btn">
+        <div class="review-create-btn" @click="toCreateReview">
           <i class="fas fa-edit"></i>
         </div>
       </div>
@@ -61,21 +61,16 @@
 import { mapState, mapActions } from "vuex";
 import Reviews from "../components/Reviews";
 import Review from "../components/Review";
-
 // const init = function() {
 //   const moreBtn = document.querySelector(".more-btn");
 //   const info = document.querySelector(".detail");
-
 //   const handleMoreBtnClick = function() {
 //     console.log("눌림");
 //     info.classList.add("hide");
 //   };
-
 //   moreBtn.addEventListener("click", handleMoreBtnClick);
 // };
-
 // window.addEventListener("load", init);
-
 export default {
   name: "MovieDetail",
   data() {
@@ -107,6 +102,12 @@ export default {
         params: { moviePK: this.moviePK },
       });
     },
+    toCreateReview() {
+      this.$router.push({
+        name: "ReviewCreate",
+        params: { moviePK: this.moviePK },
+      })
+    }
   },
   watch: {
     moviePK() {
@@ -138,40 +139,32 @@ export default {
   line-height: 1.3;
   /* border: 1px solid white; */
 }
-
 .movie-container img {
   margin-right: 20px;
 }
-
 .movie-container__column {
   width: 100%;
 }
-
 .info__rating i {
   color: rgb(255, 188, 2);
 }
-
 .review {
   border-top: 1px solid rgba(252, 252, 252, 0.5);
   padding-top: 20px;
 }
-
 .more-btn {
   font-weight: 600;
   cursor: pointer;
   transition: color 0.1s ease-in-out;
 }
-
 .more-btn:hover {
   /* color: rgba(229, 10, 19, 0.7); */
   color: rgba(252, 252, 252, 0.8);
 }
-
 .review-create-btn {
   font-size: 20px;
   text-align: right;
 }
-
 .review-create-btn i {
   background-color: white;
   color: black;
@@ -181,7 +174,6 @@ export default {
   cursor: pointer;
   transition: background-color 0.1s ease-in-out;
 }
-
 .review-create-btn i:hover {
   background-color: rgb(255, 188, 2);
   color: black;

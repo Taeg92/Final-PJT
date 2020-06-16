@@ -115,6 +115,7 @@ export default new Vuex.Store({
         .catch((err) => console.log(err.response));
     },
     submitReview({ getters }, { moviePK, reviewData }) {
+      console.log('작성할게요')
       axios
         .post(
           API.DB_BASE + API.DB_ROUTES.reviews(moviePK),
