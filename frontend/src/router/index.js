@@ -20,9 +20,59 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/",
-    name: "Home",
-    component: Home,
+    path: "/movies/:moviePK(\\d+)/reviews/create",
+    name: "ReviewCreate",
+    component: ReviewCreate,
+  },
+  {
+    path: "/movies/:moviePK(\\d+)/reviews/:reviewPK(\\d+)/delete",
+    name: "ReviewDelete",
+    component: ReviewDelete,
+  },
+  {
+    path: "/movies/:moviePK(\\d+)/reviews/:reviewPK(\\d+)/Edit",
+    name: "ReviewEdit",
+    component: ReviewEdit,
+  },
+  {
+    path: "/movies/:moviePK(\\d+)/reviews/:reviewPK(\\d+)",
+    name: "ReviewDetail",
+    component: MovieDetail,
+  },
+  {
+    path: "/movies/:moviePK(\\d+)/reviews",
+    name: "MovieReviews",
+    component: MovieDetail,
+  },
+  {
+    path: "/movies/:moviePK(\\d+)",
+    name: "MovieDetail",
+    component: MovieDetail,
+  },
+  {
+    path: "/reviews",
+    name: "Reviews",
+    component: Reviews,
+  },
+  {
+    path: '/comments',
+    name: 'Comments',
+    component: Comments,
+  },
+  {
+    path: "/comment/create",
+    name: "CommentCreate",
+    component: CommentCreate,
+  },
+  {
+    path: "/comment/1/edit",
+    name: "CommentEdit",
+    component: CommentEdit,
+  },
+  {
+    path: '/comment/:commentPK(\\d+)/delete',
+    name: 'CommentDelete',
+    component: CommentDelete,
   },
   {
     path: "/signup",
@@ -40,59 +90,9 @@ const routes = [
     component: Logout,
   },
   {
-    path: "/movies/:moviePK",
-    name: "MovieDetail",
-    component: MovieDetail,
-  },
-  {
-    path: "/reviews",
-    name: "Reviews",
-    component: Reviews,
-  },
-  {
-    path: "/movies/:moviePK/reviews",
-    name: "MovieReviews",
-    component: MovieDetail,
-  },
-  {
-    path: "/movies/:moviePK/reviews/:reviewPK",
-    name: "ReviewDetail",
-    component: MovieDetail,
-  },
-  {
-    path: "/movies/:moviePK/reviews/:reviewPK/delete",
-    name: "ReviewDelete",
-    component: ReviewDelete,
-  },
-  {
-    path: "/movies/:moviePK/reviews/create",
-    name: "ReviewCreate",
-    component: ReviewCreate,
-  },
-  {
-    path: "/movies/:moviePK/reviews/:reviewPK/Edit",
-    name: "ReviewEdit",
-    component: ReviewEdit,
-  },
-  {
-    path: "/comments",
-    name: "Comments",
-    component: Comments,
-  },
-  {
-    path: "/comment/create",
-    name: "CommentCreate",
-    component: CommentCreate,
-  },
-  {
-    path: "/comment/1/edit",
-    name: "CommentEdit",
-    component: CommentEdit,
-  },
-  {
-    path: "/comment/:commentPK/delete",
-    name: "CommentDelete",
-    component: CommentDelete,
+    path: "/",
+    name: "Home",
+    component: Home,
   },
   // component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
 ];
