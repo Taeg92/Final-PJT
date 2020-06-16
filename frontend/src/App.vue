@@ -19,11 +19,9 @@ export default {
 </script>
 
 <style scoped>
-body {
-  background-color: black;
-}
-
 #app {
+  background-color: black !important;
+  color: #f2f2f2 !important;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

@@ -82,9 +82,9 @@ export default {
 <style scoped>
 .poster-container {
   display: flex;
-  /* overflow: hidden; */
+  overflow: hidden;
   overflow: scroll;
-  padding-top: 40px;
+  padding: 40px 20px;
 }
 
 .arrow {
