@@ -1,34 +1,24 @@
 <template>
-  <div
-    id="nav"
-    class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 shadow-sm"
-  >
-    <router-link
-      class="navbar-logo my-0 mr-md-auto font-weight-normal"
-      to="/"
-      >Movie</router-link
-    >
-    <nav class="my-2 my-md-0 mr-md-3">
-      <router-link
-        class="p-2 text-light"
-        v-if="!isLoggedIn"
-        to="/login"
-        >Login</router-link
-      >
-      <router-link
-        class="p-2 text-light"
-        v-if="isLoggedIn"
-        to="/logout"
-        >Logout</router-link
-      >
-    </nav>
-    <router-link
-      class="btn btn-danger text-light"
-      v-if="!isLoggedIn"
-      to="/signup"
-      >Sign up</router-link
-    >
-  </div>
+  <nav class="navbar navbar-expand-lg">
+    <router-link class="navbar-brand my-0 mr-md-auto font-weight-bold" to="/">Movie</router-link>
+    <button class="navbar-toggler toggler-example" type="button" data-toggle="collapse" data-target="#navbarNav"
+    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="dark-white-text"><i
+        class="fas fa-bars fa-1x"></i></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto d-flex justify-content-end align-items-center">
+        <li class="nav-item mx-1 my-1">
+          <router-link class="p-2 text-light" v-if="!isLoggedIn" to="/login">Login</router-link>
+        </li>
+        <li class="nav-item mx-1 my-1">
+          <router-link class="p-2 text-light" v-if="isLoggedIn" to="/logout">Logout</router-link>
+        </li>
+        <li class="nav-item mx-1 my-1">
+          <router-link class="btn btn-danger text-light" v-if="!isLoggedIn" to="/signup">Sign up</router-link>
+        </li>
+      </ul>
+    </div>
+  </nav>
 </template>
 
 <script>
@@ -55,7 +45,23 @@ export default {
   font-weight: bold;
   color: #e50a13;
 }
+.navbar {
+  background: black;
+}
+.navbar a {
+  text-decoration: none;
+  color: #e50a13
+}
 
 #nav a.router-link-exact-active {
+}
+.fa-1x {
+font-size: 1.5rem;
+}
+.navbar-toggler.toggler-example {
+cursor: pointer;
+}
+.dark-white-text {
+color: white;
 }
 </style>
