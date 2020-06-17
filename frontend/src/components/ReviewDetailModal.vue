@@ -1,19 +1,15 @@
 <template>
-  <div class="review-modal">
+  <div v-if="selectedReview" class="review-modal">
     <div class="review-modal__container">
+      <header class="modal__close-btn">x</header>
       <div class="modal__column">
         <h3>{{ selectedReview.title }}</h3>
         <p>{{ selectedReview.content }}</p>
       </div>
       <div class="modal__column">
-        <ul>
-          <li
-            v-for="comment in selectedReview.comments"
-            :key="comment.id"
-          >
-            {{ comment.content }}
-          </li>
-        </ul>
+        <Comments v-if="selectedReview.comments.length > 0" :comments="selectedReview.comments"></Comments>
+        <div v-else>아직 등록된 댓글이 없습니다.</div>
+        <CommentCreateForm />
       </div>
     </div>
   </div>
@@ -21,9 +17,15 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import Comments from "./Comments";
+import CommentCreateForm from "./CommentCreateForm";
 
 export default {
   name: "ReviewDetailModal",
+  components: {
+    Comments,
+    CommentCreateForm
+  },
   computed: {
     ...mapState(["selectedReview"]),
     reviewPK() {
@@ -31,20 +33,28 @@ export default {
     },
     moviePK() {
       return this.$route.params.moviePK;
-    },
+    }
   },
+  // watch: {
+  // selectedReview() {
+  // console.log("watch");
+  // },
+  // },
   methods: {
-    ...mapActions(["getReviewDetail"]),
+    ...mapActions(["getReviewDetail"])
+  },
+  updated() {
+    console.log("updated");
   },
   created() {
     this.getReviewDetail(this.reviewPK);
-  },
+  }
 };
 </script>
 
 <style>
 .review-modal {
-  background-color: transparent;
+  /* background-color: ; */
   position: absolute;
   top: 0;
   left: 0;
@@ -58,19 +68,32 @@ export default {
 }
 
 .review-modal__container {
-  width: 70%;
-  height: 80%;
+  width: 60%;
+  height: 70%;
   background-color: white;
   border-radius: 20px;
-  padding: 40px 60px;
   display: flex;
+  position: relative;
+}
+
+.review-modal__container header {
+  position: absolute;
+  right: 10px;
+  font-size: 25px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.6);
 }
 
 .modal__column {
   width: 50%;
+  margin: 40px 0;
+  padding: 10px 30px;
 }
 
 .modal__column:last-child {
   border-left: 1px solid grey;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 </style>

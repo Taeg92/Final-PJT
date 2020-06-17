@@ -1,9 +1,11 @@
 <template>
-  <div class="review" @click="selectReview">
-    <span class="review__title">{{ review.title }}</span>
-    <span class="review__user"
-      >by. {{ review.user.username }}</span
-    >
+  <div class="review" @click="clickModalOutside">
+    <div class="review-container" @click="selectReview">
+      <span class="review__title">{{ review.title }}</span>
+      <span class="review__user"
+        >by. {{ review.user.username }}</span
+      >
+    </div>
     <ReviewDetailModal v-if="showModal" />
   </div>
 </template>
@@ -34,6 +36,21 @@ export default {
         },
       });
     },
+    clickModalOutside(e) {
+      if (
+        this.showModal &&
+        (e.target.className === "review-modal" ||
+          e.target.className === "modal__close-btn")
+      ) {
+        this.showModal = false;
+        this.$router.push({
+          name: "MovieReviews",
+          params: {
+            moviePK: this.review.movie.id,
+          },
+        });
+      }
+    },
   },
   watch: {
     $route() {
@@ -58,7 +75,7 @@ export default {
 </script>
 
 <style scoped>
-.review {
+.review-container {
   background-color: #e50a13b3;
   padding: 10px 20px;
   border-radius: 15px;
@@ -70,11 +87,15 @@ export default {
   width: 100%;
 }
 
-.review:not(:last-child) {
+.review-container:not(:last-child) {
   margin-bottom: 10px;
 }
 
-.review:hover {
+.review-container:hover {
   opacity: 0.9;
+}
+
+.review {
+  margin-bottom: 10px;
 }
 </style>
