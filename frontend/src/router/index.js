@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+import MoviesAll from "../views/MoviesAll.vue";
 import MovieDetail from "../views/MovieDetail.vue";
 import Signup from "../views/accounts/Signup.vue";
 import Login from "../views/accounts/Login.vue";
@@ -16,6 +17,11 @@ import CommentDelete from "../views/CommentDelete.vue";
 Vue.use(VueRouter);
 
 const routes = [
+  {
+    path: "/movies/all",
+    name: "MoviesAll",
+    component: MoviesAll,
+  },
   {
     path: "/movies/:moviePK(\\d+)/reviews/create",
     name: "ReviewCreate",
