@@ -2,13 +2,16 @@
   <div v-if="selectedReview" class="review-modal">
     <div class="review-modal__container">
       <header class="modal__close-btn">x</header>
-      <div class="modal__column">
-        <h3>{{ selectedReview.title }}</h3>
+      <div class="modal__column column-left">
+        <h4>{{ selectedReview.title }}</h4>
+        <div class="text-right mb-2">작성자: {{ selectedReview.user.username }}</div>
         <p>{{ selectedReview.content }}</p>
+        <div v-if="username === selectedReview.user.username" class="btns">
+          <i class="fas fa-pencil-alt btns__btn btn__edit" @click="toEditReview"></i>
+          <i class="far fa-trash-alt btns__btn btn__delete" @click="toDeleteReview"></i>
+        </div>
       </div>
-      <button class="btn btn-primary" @click="toEditReview">수정하기</button>
-      <button class="btn btn-danger" @click="toDeleteReview">삭제하기</button>
-      <div class="modal__column">
+      <div class="modal__column column-right">
         <Comments v-if="selectedReview.comments.length > 0" :comments="selectedReview.comments"></Comments>
         <div v-else>아직 등록된 댓글이 없습니다.</div>
         <CommentCreateForm />
@@ -29,7 +32,7 @@ export default {
     CommentCreateForm
   },
   computed: {
-    ...mapState(["selectedReview"]),
+    ...mapState(["selectedReview", "username"]),
     reviewPK() {
       return this.$route.params.reviewPK;
     },
@@ -37,28 +40,20 @@ export default {
       return this.$route.params.moviePK;
     }
   },
-  // watch: {
-  // selectedReview() {
-  // console.log("watch");
-  // },
-  // },
   methods: {
     ...mapActions(["getReviewDetail"]),
     toEditReview() {
       this.$router.push({
         name: "ReviewEdit",
-        params: { moviePK: this.moviePK, reviewPK: this.reviewPK },
-      })
+        params: { moviePK: this.moviePK, reviewPK: this.reviewPK }
+      });
     },
     toDeleteReview() {
       this.$router.push({
         name: "ReviewDelete",
-        params: { moviePK: this.moviePK, reviewPK: this.reviewPK },
-      })
+        params: { moviePK: this.moviePK, reviewPK: this.reviewPK }
+      });
     }
-  },
-  updated() {
-    console.log("updated");
   },
   created() {
     this.getReviewDetail(this.reviewPK);
@@ -100,14 +95,34 @@ export default {
 
 .modal__column {
   width: 50%;
-  margin: 40px 0;
-  padding: 10px 30px;
+  /* margin: 40px 0; */
+  padding: 50px 30px;
 }
 
-.modal__column:last-child {
-  border-left: 1px solid grey;
+.column-left {
+  border: 1px solid white;
+  background-color: black;
+  color: white;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.column-right {
+  border: 1px soild black;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.btns {
+  font-size: 20px;
+  text-align: right;
+  color: white;
+}
+
+.btns__btn:first-child {
+  margin-right: 15px;
 }
 </style>

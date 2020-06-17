@@ -2,10 +2,10 @@
   <div class="review" @click="clickModalOutside">
     <div class="review-container" @click="selectReview">
       <span class="review__title">{{ review.title }}</span>
-      <span class="badge badge-info">{{ review.rating }}</span>
-      <span class="review__user"
-        >by. {{ review.user.username }}</span
-      >
+      <span>
+        <i v-for="n in Number(review.rating)" :key="n" class="fas fa-star rating"></i>
+      </span>
+      <span class="review__user">by. {{ review.user.username }}</span>
     </div>
     <ReviewDetailModal v-if="showModal" />
   </div>
@@ -17,15 +17,15 @@ import ReviewDetailModal from "./ReviewDetailModal";
 export default {
   name: "Review",
   props: {
-    review: Object,
+    review: Object
   },
   data() {
     return {
-      showModal: false,
+      showModal: false
     };
   },
   components: {
-    ReviewDetailModal,
+    ReviewDetailModal
   },
   methods: {
     selectReview() {
@@ -33,8 +33,8 @@ export default {
         name: "ReviewDetail",
         params: {
           moviePK: this.review.movie.id,
-          reviewPK: this.review.id,
-        },
+          reviewPK: this.review.id
+        }
       });
     },
     clickModalOutside(e) {
@@ -47,22 +47,21 @@ export default {
         this.$router.push({
           name: "MovieReviews",
           params: {
-            moviePK: this.review.movie.id,
-          },
+            moviePK: this.review.movie.id
+          }
         });
       }
-    },
+    }
   },
   watch: {
     $route() {
       if (
         this.$route.name === "ReviewDetail" &&
-        Number(this.$route.params.reviewPK) ===
-          this.review.id
+        Number(this.$route.params.reviewPK) === this.review.id
       ) {
         this.showModal = true;
       }
-    },
+    }
   },
   created() {
     if (
@@ -71,13 +70,14 @@ export default {
     ) {
       this.showModal = true;
     }
-  },
+  }
 };
 </script>
 
 <style scoped>
 .review-container {
-  background-color: #e50a13b3;
+  border: 1px solid #e50a13b3;
+  background-color: transparent;
   padding: 10px 20px;
   border-radius: 15px;
   color: #f2f2f2;
@@ -88,6 +88,10 @@ export default {
   width: 100%;
 }
 
+.review:hover {
+  background-color: #e50a13b3;
+  border-radius: 15px;
+}
 .review-container:not(:last-child) {
   margin-bottom: 10px;
 }
@@ -98,5 +102,9 @@ export default {
 
 .review {
   margin-bottom: 10px;
+}
+
+.rating {
+  color: rgb(255, 188, 2);
 }
 </style>
