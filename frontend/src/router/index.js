@@ -60,7 +60,7 @@ const routes = [
     component: CommentCreate,
   },
   {
-    path: "/comment/1/edit",
+    path: "/comment/1/edit/movie/:moviePK/review/:reviewPK",
     name: "CommentEdit",
     component: CommentEdit,
   },
