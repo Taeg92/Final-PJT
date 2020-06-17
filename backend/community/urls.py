@@ -10,4 +10,5 @@ urlpatterns = [
     path('reviews/<int:pk>/comments/', views.ReviewComments.as_view(), name='ReviewComments'),
     # path('comments/', views.CommentList.as_view(), name='CommentList'),
     path('comments/<int:pk>/', views.CommentDetail.as_view(), name='CommentDetail'),
+    path('recommend/', views.MovieRecommend.as_view(), name='MovieRecommend'),
 ]

@@ -34,6 +34,11 @@ class MovieList(APIView):
         movie.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class MovieRecommend(APIView):
+    def get(self, request, format=None):
+        movies = Movie.objects.all().order_by('?')[:10]
+        serializer = MovieSerializer(movies, many=True)
+        return Response(serializer.data)
 
 class MovieDetail(APIView):
 
