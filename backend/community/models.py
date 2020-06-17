@@ -33,7 +33,7 @@ class Review(BaseModel):
     movie = models.ForeignKey(
         Movie, on_delete=models.CASCADE, related_name='reviews')
     title = models.CharField(max_length=100)
-    rating = models.IntegerField(max_length=1)
+    rating = models.CharField(max_length=1)
     content = models.TextField()
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reviews')
