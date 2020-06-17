@@ -7,9 +7,15 @@ import router from "../router";
 import axios from "axios";
 import cookies from "vue-cookies";
 
+import createPersistedState from 'vuex-persistedstate';
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+  modules: {},
+  plugins: [
+    createPersistedState()
+  ],
   state: {
     authToken: cookies.get("auth-token"),
     username: null,
@@ -270,5 +276,4 @@ export default new Vuex.Store({
         .catch((err) => console.log(err.response));
     },
   },
-  modules: {},
 });
