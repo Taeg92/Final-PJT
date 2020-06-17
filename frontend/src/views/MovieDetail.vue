@@ -1,8 +1,7 @@
 <template>
   <div v-if="selectedMovie" class="movie-detail">
-    <div class="backdrop"></div>
     <div class="movie-container">
-      <img :src="poster_path" width="300" height="auto" />
+      <img :src="poster_path" />
       <div class="movie-container__column">
         <div class="detail" v-if="!isDetailMoreActive">
           <div class="info">
@@ -30,23 +29,33 @@
             </p>
           </div>
           <div class="review">
-            <div class="text-right">
-              <span class="more-btn" @click="showReviews">
-                더보기
-              </span>
+            <div v-if="selectedMovie.reviews.length > 0">
+              <div
+                v-if="selectedMovie.reviews.length > 3"
+                class="text-right mb-2"
+              >
+                <span class="more-btn" @click="showReviews">
+                  더보기
+                </span>
+              </div>
+              <Review
+                v-for="review in selectedMovie.reviews.slice(
+                  0,
+                  3
+                )"
+                :review="review"
+                :key="review.id"
+              />
             </div>
-            <Review
-              v-for="review in selectedMovie.reviews.slice(
-                0,
-                3
-              )"
-              :review="review"
-              :key="review.id"
-            />
+            <div v-else>
+              <p>
+                아직 등록된 리뷰가 없습니다. 첫 리뷰의
+                주인공이 되어보세요!
+              </p>
+            </div>
           </div>
         </div>
         <div class="review-more" v-if="isDetailMoreActive">
-          <!-- <Reviews :reviews="selectedMovie.reviews" /> -->
           <Reviews />
         </div>
         <div class="review-create-btn">
@@ -61,20 +70,6 @@
 import { mapState, mapActions } from "vuex";
 import Reviews from "../components/Reviews";
 import Review from "../components/Review";
-
-// const init = function() {
-//   const moreBtn = document.querySelector(".more-btn");
-//   const info = document.querySelector(".detail");
-
-//   const handleMoreBtnClick = function() {
-//     console.log("눌림");
-//     info.classList.add("hide");
-//   };
-
-//   moreBtn.addEventListener("click", handleMoreBtnClick);
-// };
-
-// window.addEventListener("load", init);
 
 export default {
   name: "MovieDetail",
@@ -127,33 +122,53 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+* {
+  box-sizing: border-box;
+}
+
+.movie-detail {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
 .movie-container {
-  padding: 40px 150px;
-  width: 100vw;
+  width: 70%;
+  height: 80%;
   display: flex;
   align-items: start;
-  height: 100vh;
   font-size: 14px;
   line-height: 1.3;
-  /* border: 1px solid white; */
 }
 
 .movie-container img {
   margin-right: 20px;
+  min-width: 250px;
+  width: 50%;
+  height: auto;
 }
 
 .movie-container__column {
   width: 100%;
+  height: 100%;
+}
+
+.info {
+  padding-bottom: 5px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid rgba(252, 252, 252, 0.5);
 }
 
 .info__rating i {
   color: rgb(255, 188, 2);
 }
 
-.review {
-  border-top: 1px solid rgba(252, 252, 252, 0.5);
-  padding-top: 20px;
+.info__overview {
+  height: 90px;
+  overflow-y: scroll;
 }
 
 .more-btn {
@@ -163,7 +178,6 @@ export default {
 }
 
 .more-btn:hover {
-  /* color: rgba(229, 10, 19, 0.7); */
   color: rgba(252, 252, 252, 0.8);
 }
 
@@ -185,5 +199,11 @@ export default {
 .review-create-btn i:hover {
   background-color: rgb(255, 188, 2);
   color: black;
+}
+
+.review-more {
+  padding-right: 10px;
+  height: 480px;
+  overflow-y: scroll;
 }
 </style>

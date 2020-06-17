@@ -50,10 +50,6 @@ export default {
 </script>
 
 <style>
-.movie-reviews {
-  width: 100%;
-}
-
 .create-btn {
   font-size: 20px;
   text-align: right;

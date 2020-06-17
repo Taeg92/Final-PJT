@@ -52,10 +52,10 @@ export default new Vuex.Store({
       state.selectedReview = review;
     },
     SET_COMMENTS(state, comments) {
-      state.comments = comments
+      state.comments = comments;
     },
     SET_SELECTED_COMMENT(state, comment) {
-      state.selectedComment = comment
+      state.selectedComment = comment;
     },
   },
   actions: {
@@ -162,39 +162,39 @@ export default new Vuex.Store({
         })
         .catch((err) => console.log(err.response));
     },
-    createComment({ getters }, commentData) {
+    createComment({ getters }, { reviewPK, content }) {
       axios
         .post(
-          API.DB_BASE + API.DB_ROUTES.commentCreate(1),
-          commentData,
+          API.DB_BASE +
+            API.DB_ROUTES.commentCreate(reviewPK),
+          { content },
           getters.config
         )
-        .then(() => {
-          router.push({ name: "Comments" });
-        })
-        .catch((err) => console.log(err.response));
+        .then(() =>
+          router.push({ name: { CommentCreate } })
+        )
+        .catch((err) => console.log(err));
     },
     getCommentDetail({ commit }, reviewPK) {
       axios
-        .get(
-          API.DB_BASE + API.DB_ROUTES.comments(reviewPK)
-        )
+        .get(API.DB_BASE + API.DB_ROUTES.comments(reviewPK))
         .then((res) => {
           commit("SET_SELECTED_COMMENT", res.data);
         })
         .catch((err) => console.log(err.response));
     },
-    putCommentDetail(_ , {commentPK, commentData}) {
+    putCommentDetail(_, { commentPK, commentData }) {
       axios
         .put(
-          API.DB_BASE + API.DB_ROUTES.comments(commentPK), commentData
+          API.DB_BASE + API.DB_ROUTES.comments(commentPK),
+          commentData
         )
         .then(() => {
           router.push({ name: "Comments" });
         })
         .catch((err) => console.log(err.response));
     },
-    deleteCommentDetail(_ , commentPK) {
+    deleteCommentDetail(_, commentPK) {
       axios
         .delete(
           API.DB_BASE + API.DB_ROUTES.comments(commentPK)

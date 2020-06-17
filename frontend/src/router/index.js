@@ -5,14 +5,11 @@ import MovieDetail from "../views/MovieDetail.vue";
 import Signup from "../views/accounts/Signup.vue";
 import Login from "../views/accounts/Login.vue";
 import Logout from "../views/accounts/Logout.vue";
-// import MovieReviews from "../views/MovieReviews.vue";
 import Reviews from "../views/Reviews.vue";
-// import ReviewDetail from "../views/ReviewDetail.vue";
 import ReviewDelete from "../views/ReviewDelete.vue";
 import ReviewCreate from "../views/ReviewCreate.vue";
 import ReviewEdit from "../views/ReviewEdit.vue";
 import Comments from "../views/Comments.vue";
-import CommentCreate from "../views/CommentCreate.vue";
 import CommentEdit from "../views/CommentEdit.vue";
 import CommentDelete from "../views/CommentDelete.vue";
 
@@ -25,12 +22,14 @@ const routes = [
     component: ReviewCreate,
   },
   {
-    path: "/movies/:moviePK(\\d+)/reviews/:reviewPK(\\d+)/delete",
+    path:
+      "/movies/:moviePK(\\d+)/reviews/:reviewPK(\\d+)/delete",
     name: "ReviewDelete",
     component: ReviewDelete,
   },
   {
-    path: "/movies/:moviePK(\\d+)/reviews/:reviewPK(\\d+)/Edit",
+    path:
+      "/movies/:moviePK(\\d+)/reviews/:reviewPK(\\d+)/Edit",
     name: "ReviewEdit",
     component: ReviewEdit,
   },
@@ -55,14 +54,9 @@ const routes = [
     component: Reviews,
   },
   {
-    path: '/comments',
-    name: 'Comments',
+    path: "/comments",
+    name: "Comments",
     component: Comments,
-  },
-  {
-    path: "/comment/create",
-    name: "CommentCreate",
-    component: CommentCreate,
   },
   {
     path: "/comment/1/edit",
@@ -70,8 +64,8 @@ const routes = [
     component: CommentEdit,
   },
   {
-    path: '/comment/:commentPK(\\d+)/delete',
-    name: 'CommentDelete',
+    path: "/comment/:commentPK(\\d+)/delete",
+    name: "CommentDelete",
     component: CommentDelete,
   },
   {
