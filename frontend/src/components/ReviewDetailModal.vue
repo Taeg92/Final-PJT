@@ -6,7 +6,11 @@
         <h4>{{ selectedReview.title }}</h4>
         <div class="text-right mb-2">
           <span v-if="selectedReview.user.avatar">
-            <img class="user-avatar" :src="userAvatarURL" alt="">
+            <img
+              class="user-avatar"
+              :src="userAvatarURL"
+              alt=""
+            />
           </span>
           <span v-else>
             <i class="fas fa-user"></i>
@@ -14,13 +18,27 @@
           {{ selectedReview.user.username }}
         </div>
         <p>{{ selectedReview.content }}</p>
-        <div v-if="username === selectedReview.user.username" class="btns">
-          <i class="fas fa-pencil-alt btns__btn btn__edit" @click="toEditReview"></i>
-          <i class="far fa-trash-alt btns__btn btn__delete" @click="toDeleteReview"></i>
+        <div
+          v-if="
+            user.username === selectedReview.user.username
+          "
+          class="btns"
+        >
+          <i
+            class="fas fa-pencil-alt btns__btn btn__edit"
+            @click="toEditReview"
+          ></i>
+          <i
+            class="far fa-trash-alt btns__btn btn__delete"
+            @click="toDeleteReview"
+          ></i>
         </div>
       </div>
       <div class="modal__column column-right">
-        <Comments v-if="selectedReview.comments.length > 0" :comments="selectedReview.comments"></Comments>
+        <Comments
+          v-if="selectedReview.comments.length > 0"
+          :comments="selectedReview.comments"
+        ></Comments>
         <div v-else>아직 등록된 댓글이 없습니다.</div>
         <CommentCreateForm />
       </div>
@@ -38,10 +56,10 @@ export default {
   name: "ReviewDetailModal",
   components: {
     Comments,
-    CommentCreateForm
+    CommentCreateForm,
   },
   computed: {
-    ...mapState(["selectedReview", "username"]),
+    ...mapState(["selectedReview", "user"]),
     reviewPK() {
       return this.$route.params.reviewPK;
     },
@@ -49,27 +67,36 @@ export default {
       return this.$route.params.moviePK;
     },
     userAvatarURL() {
-      return API.DB_BASE + this.selectedReview.user.avatar.slice(1,)
-    }
+      return (
+        API.DB_BASE +
+        this.selectedReview.user.avatar.slice(1)
+      );
+    },
   },
   methods: {
     ...mapActions(["getReviewDetail"]),
     toEditReview() {
       this.$router.push({
         name: "ReviewEdit",
-        params: { moviePK: this.moviePK, reviewPK: this.reviewPK }
+        params: {
+          moviePK: this.moviePK,
+          reviewPK: this.reviewPK,
+        },
       });
     },
     toDeleteReview() {
       this.$router.push({
         name: "ReviewDelete",
-        params: { moviePK: this.moviePK, reviewPK: this.reviewPK }
+        params: {
+          moviePK: this.moviePK,
+          reviewPK: this.reviewPK,
+        },
       });
-    }
+    },
   },
   created() {
     this.getReviewDetail(this.reviewPK);
-  }
+  },
 };
 </script>
 
