@@ -7,15 +7,13 @@ import router from "../router";
 import axios from "axios";
 import cookies from "vue-cookies";
 
-import createPersistedState from 'vuex-persistedstate';
+import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {},
-  plugins: [
-    createPersistedState()
-  ],
+  plugins: [createPersistedState()],
   state: {
     authToken: cookies.get("auth-token"),
     user: null,
@@ -69,6 +67,12 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    getRecommendations({ commit }) {
+      axios
+        .get(API.DB_BASE + API.DB_ROUTES.recommend)
+        .then((res) => commit("SET_MOVIES", res.data))
+        .catch((err) => console.log(err.response));
+    },
     getMovies({ commit }) {
       axios
         .get(API.DB_BASE + API.DB_ROUTES.movies())
@@ -110,11 +114,15 @@ export default new Vuex.Store({
         })
         .catch((err) => console.log(err.response));
     },
-    deleteReview({ commit, getters }, { moviePK, reviewPK }) {
-      console.log(getters.config)
+    deleteReview(
+      { commit, getters },
+      { moviePK, reviewPK }
+    ) {
+      console.log(getters.config);
       axios
         .delete(
-          API.DB_BASE + API.DB_ROUTES.reviewDetail(reviewPK),
+          API.DB_BASE +
+            API.DB_ROUTES.reviewDetail(reviewPK),
           getters.config
         )
         .then(() => {
