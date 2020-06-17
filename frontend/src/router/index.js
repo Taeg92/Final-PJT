@@ -29,7 +29,7 @@ const routes = [
   },
   {
     path:
-      "/movies/:moviePK(\\d+)/reviews/:reviewPK(\\d+)/Edit",
+      "/movies/:moviePK(\\d+)/reviews/:reviewPK(\\d+)/edit",
     name: "ReviewEdit",
     component: ReviewEdit,
   },

@@ -100,10 +100,12 @@ export default new Vuex.Store({
         })
         .catch((err) => console.log(err.response));
     },
-    deleteReview({ commit }, { moviePK, reviewPK }) {
+    deleteReview({ commit, getters }, { moviePK, reviewPK }) {
+      console.log(getters.config)
       axios
         .delete(
-          API.DB_BASE + API.DB_ROUTES.reviewDetail(reviewPK)
+          API.DB_BASE + API.DB_ROUTES.reviewDetail(reviewPK),
+          getters.config
         )
         .then(() => {
           commit("SET_SELECTED_REVIEW", null);

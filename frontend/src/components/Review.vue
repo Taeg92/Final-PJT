@@ -2,6 +2,7 @@
   <div class="review" @click="clickModalOutside">
     <div class="review-container" @click="selectReview">
       <span class="review__title">{{ review.title }}</span>
+      <span class="badge badge-info">{{ review.rating }}</span>
       <span class="review__user"
         >by. {{ review.user.username }}</span
       >
