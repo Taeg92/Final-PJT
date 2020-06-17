@@ -58,7 +58,7 @@
         <div class="review-more" v-if="isDetailMoreActive">
           <Reviews />
         </div>
-        <div class="review-create-btn">
+        <div class="review-create-btn" @click="toCreateReview">
           <i class="fas fa-edit"></i>
         </div>
       </div>
@@ -102,6 +102,12 @@ export default {
         params: { moviePK: this.moviePK },
       });
     },
+    toCreateReview() {
+      this.$router.push({
+        name: "ReviewCreate",
+        params: { moviePK: this.moviePK },
+      })
+    }
   },
   watch: {
     moviePK() {
@@ -143,14 +149,12 @@ export default {
   font-size: 14px;
   line-height: 1.3;
 }
-
 .movie-container img {
   margin-right: 20px;
   min-width: 250px;
   width: 50%;
   height: auto;
 }
-
 .movie-container__column {
   width: 100%;
   height: 100%;
@@ -161,7 +165,6 @@ export default {
   margin-bottom: 15px;
   border-bottom: 1px solid rgba(252, 252, 252, 0.5);
 }
-
 .info__rating i {
   color: rgb(255, 188, 2);
 }
@@ -176,16 +179,13 @@ export default {
   cursor: pointer;
   transition: color 0.1s ease-in-out;
 }
-
 .more-btn:hover {
   color: rgba(252, 252, 252, 0.8);
 }
-
 .review-create-btn {
   font-size: 20px;
   text-align: right;
 }
-
 .review-create-btn i {
   background-color: white;
   color: black;
@@ -195,7 +195,6 @@ export default {
   cursor: pointer;
   transition: background-color 0.1s ease-in-out;
 }
-
 .review-create-btn i:hover {
   background-color: rgb(255, 188, 2);
   color: black;
