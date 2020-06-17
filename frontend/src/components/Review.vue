@@ -5,7 +5,15 @@
       <span>
         <i v-for="n in Number(review.rating)" :key="n" class="fas fa-star rating"></i>
       </span>
-      <span class="review__user">by. {{ review.user.username }}</span>
+      <span class="review__user">by
+        <span v-if="review.user.avatar">
+          <img class="user-avatar" :src="userAvatarURL" alt="">
+        </span>
+        <span v-else>
+          <i class="fas fa-user fa-2x"></i>
+        </span>
+        {{ review.user.username }}
+      </span>
     </div>
     <ReviewDetailModal v-if="showModal" />
   </div>
@@ -13,6 +21,7 @@
 
 <script>
 import ReviewDetailModal from "./ReviewDetailModal";
+import API from "../api/api.js";
 
 export default {
   name: "Review",
@@ -25,7 +34,12 @@ export default {
     };
   },
   components: {
-    ReviewDetailModal
+    ReviewDetailModal,
+  },
+  computed: {
+    userAvatarURL() {
+      return API.DB_BASE + this.review.user.avatar.slice(1,)
+    }
   },
   methods: {
     selectReview() {
@@ -106,5 +120,10 @@ export default {
 
 .rating {
   color: rgb(255, 188, 2);
+}
+.user-avatar {
+  border-radius: 50%;
+  height: 40px;
+  background: white;
 }
 </style>

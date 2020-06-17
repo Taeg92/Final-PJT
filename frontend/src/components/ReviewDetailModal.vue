@@ -4,7 +4,15 @@
       <header class="modal__close-btn">x</header>
       <div class="modal__column column-left">
         <h4>{{ selectedReview.title }}</h4>
-        <div class="text-right mb-2">작성자: {{ selectedReview.user.username }}</div>
+        <div class="text-right mb-2">
+          <span v-if="selectedReview.user.avatar">
+            <img class="user-avatar" :src="userAvatarURL" alt="">
+          </span>
+          <span v-else>
+            <i class="fas fa-user"></i>
+          </span>
+          {{ selectedReview.user.username }}
+        </div>
         <p>{{ selectedReview.content }}</p>
         <div v-if="username === selectedReview.user.username" class="btns">
           <i class="fas fa-pencil-alt btns__btn btn__edit" @click="toEditReview"></i>
@@ -24,6 +32,7 @@
 import { mapState, mapActions } from "vuex";
 import Comments from "./Comments";
 import CommentCreateForm from "./CommentCreateForm";
+import API from "../api/api.js";
 
 export default {
   name: "ReviewDetailModal",
@@ -38,6 +47,9 @@ export default {
     },
     moviePK() {
       return this.$route.params.moviePK;
+    },
+    userAvatarURL() {
+      return API.DB_BASE + this.selectedReview.user.avatar.slice(1,)
     }
   },
   methods: {
@@ -124,5 +136,11 @@ export default {
 
 .btns__btn:first-child {
   margin-right: 15px;
+}
+.user-avatar {
+  border-radius: 50%;
+  height: 20px;
+  background: white;
+  margin-right: 5px;
 }
 </style>

@@ -3,7 +3,15 @@
     <div v-if="!editing">
       <div class="comment__content">{{ comment.content}}</div>
       <div class="comment__etc">
-        <span>by. {{ comment.user.username}}</span>
+        <span>by 
+          {{ comment.user.username}}
+          <span v-if="comment.user.avatar">
+            <img class="user-avatar" :src="userAvatarURL" alt="">
+          </span>
+          <span v-else>
+            <i class="fas fa-user"></i>
+          </span>
+        </span>
         <div v-if="username === comment.user.username" class="etc__actions">
           <i class="fas fa-pencil-alt actions__edit" @click="clickEditBtn"></i>
           <i class="far fa-trash-alt actions__delete" @click="deleteComment"></i>
@@ -19,6 +27,7 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import API from "../api/api.js";
 
 export default {
   name: "Comment",
@@ -32,7 +41,12 @@ export default {
       reviewPK: this.$route.params.reviewPK
     };
   },
-  computed: { ...mapState(["username"]) },
+  computed: { 
+    ...mapState(["username"]),
+    userAvatarURL() {
+      return API.DB_BASE + this.comment.user.avatar.slice(1,)
+    }
+  },
   methods: {
     clickEditBtn() {
       this.editing = true;

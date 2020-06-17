@@ -8,7 +8,12 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ml-auto d-flex justify-content-end align-items-center">
         <li v-if="this.$store.state.authToken">
-          <img class="user-avatar" :src="userAvatarURL" alt="">
+          <span v-if="this.$store.state.user.avatar">
+            <img class="user-avatar" :src="userAvatarURL" alt="avatar">
+          </span>
+          <span v-else>
+            <i class="fas fa-user fa-2x"></i>
+          </span>
         </li>
         <li class="nav-item mx-1 my-1">
           <router-link class="p-2 text-light" v-if="!isLoggedIn" to="/login">Login</router-link>
