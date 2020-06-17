@@ -115,7 +115,6 @@ export default new Vuex.Store({
         .catch((err) => console.log(err.response));
     },
     submitReview({ getters }, { moviePK, reviewData }) {
-      console.log('작성할게요')
       axios
         .post(
           API.DB_BASE + API.DB_ROUTES.reviews(moviePK),
@@ -163,7 +162,10 @@ export default new Vuex.Store({
         })
         .catch((err) => console.log(err.response));
     },
-    createComment({ getters }, { reviewPK, content }) {
+    createComment(
+      { getters },
+      { moviePK, reviewPK, content }
+    ) {
       axios
         .post(
           API.DB_BASE +
@@ -172,7 +174,10 @@ export default new Vuex.Store({
           getters.config
         )
         .then(() =>
-          router.push({ name: { CommentCreate } })
+          router.push({
+            name: "CommentCreate",
+            params: { moviePK, reviewPK },
+          })
         )
         .catch((err) => console.log(err));
     },

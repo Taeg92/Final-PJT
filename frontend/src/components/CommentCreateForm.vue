@@ -2,12 +2,7 @@
   <div class="create-comment">
     <label for="content"></label>
     <input v-model="submitInfo.content" type="text" />
-    <div
-      class="create-btn btn btn-sm btn-primary"
-      @click="submitComment"
-    >
-      작성하기
-    </div>
+    <div class="create-btn btn btn-sm btn-primary" @click="submitComment">작성하기</div>
   </div>
 </template>
 
@@ -19,18 +14,18 @@ export default {
   data() {
     return {
       submitInfo: {
+        moviePK: this.$route.params.moviePK,
         reviewPK: this.$route.params.reviewPK,
-        content: "",
-      },
+        content: ""
+      }
     };
   },
   methods: {
-    ...mapActions(["createComment", "getReviewDetail"]),
+    ...mapActions(["createComment"]),
     submitComment() {
       this.createComment(this.submitInfo);
-      this.getReviewDetail(this.submitInfo.reviewPK);
-    },
-  },
+    }
+  }
 };
 </script>
 

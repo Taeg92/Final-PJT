@@ -9,7 +9,7 @@ import Reviews from "../views/Reviews.vue";
 import ReviewDelete from "../views/ReviewDelete.vue";
 import ReviewCreate from "../views/ReviewCreate.vue";
 import ReviewEdit from "../views/ReviewEdit.vue";
-import Comments from "../views/Comments.vue";
+import CommentCreate from "../views/CommentCreate.vue";
 import CommentEdit from "../views/CommentEdit.vue";
 import CommentDelete from "../views/CommentDelete.vue";
 
@@ -54,9 +54,10 @@ const routes = [
     component: Reviews,
   },
   {
-    path: "/comments",
-    name: "Comments",
-    component: Comments,
+    path:
+      "/comments/create/movie/:moviePK/review/:reviewPK",
+    name: "CommentCreate",
+    component: CommentCreate,
   },
   {
     path: "/comment/1/edit",
