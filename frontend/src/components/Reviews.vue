@@ -1,13 +1,9 @@
 <template>
   <div class="movie-reviews">
-    <Review
-      v-for="review in selectedMovieReviews"
-      :review="review"
-      :key="review.id"
-    />
-    <!-- <div class="create-btn" @click="createReview">
-      <i class="fas fa-edit"></i>
-    </div> -->
+    <div v-if="selectedMovieReviews.length > 0">
+      <Review v-for="review in selectedMovieReviews" :review="review" :key="review.id" />
+    </div>
+    <div v-else>아직 등록된 리뷰가 없습니다. 첫 리뷰의 주인공이 되어보세요!</div>
   </div>
 </template>
 
@@ -22,7 +18,7 @@ export default {
     ...mapState(["selectedMovieReviews"]),
     moviePK() {
       return this.$route.params.moviePK;
-    },
+    }
   },
   methods: {
     ...mapActions(["getMovieReviews"]),
@@ -31,10 +27,10 @@ export default {
         name: "ReviewDetail",
         params: {
           moviePK: this.moviePK,
-          reviewPK: reviewPK,
-        },
+          reviewPK: reviewPK
+        }
       });
-    },
+    }
     // createReview() {
     //   // url 접근시 에러남
     //   this.$router.push({
@@ -45,7 +41,7 @@ export default {
   },
   created() {
     this.getMovieReviews(this.moviePK);
-  },
+  }
 };
 </script>
 

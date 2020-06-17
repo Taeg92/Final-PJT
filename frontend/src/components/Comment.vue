@@ -1,5 +1,5 @@
 <template>
-  <div class="comment">
+  <div class="comment" :class="{mycomment: username === comment.user.username}">
     <div v-if="!editing">
       <div class="comment__content">{{ comment.content}}</div>
       <div class="comment__etc">
@@ -95,11 +95,20 @@ input {
   background-color: transparent;
 }
 
+input:focus {
+  outline: none;
+}
+
 .submit {
   font-size: 10px;
   text-align: right;
   margin-top: 5px;
   padding-right: 10px;
   color: rgb(9, 9, 134);
+}
+
+.mycomment {
+  /* background-color: rgb(255, 168, 168); */
+  background-color: rgb(255, 230, 161);
 }
 </style>
