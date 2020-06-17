@@ -277,7 +277,7 @@ export default new Vuex.Store({
         )
         .then(() => {
           commit("SET_TOKEN", null);
-          commit("SET_USERNAME", null);
+          commit("SET_USER", null);
           cookies.remove("auth-token");
           router.push({ name: "Home" });
         })
