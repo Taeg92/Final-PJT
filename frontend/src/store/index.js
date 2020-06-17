@@ -211,13 +211,20 @@ export default new Vuex.Store({
         )
         .catch((err) => console.log(err.response));
     },
-    deleteCommentDetail(_, commentPK) {
+    deleteCommentDetail(
+      { getters },
+      { moviePK, reviewPK, commentPK }
+    ) {
       axios
         .delete(
-          API.DB_BASE + API.DB_ROUTES.comments(commentPK)
+          API.DB_BASE + API.DB_ROUTES.comments(commentPK),
+          getters.config
         )
         .then(() => {
-          router.push({ name: "Comments" });
+          router.push({
+            name: "CommentDelete",
+            params: { moviePK, reviewPK, commentPK },
+          });
         })
         .catch((err) => console.log(err.response));
     },

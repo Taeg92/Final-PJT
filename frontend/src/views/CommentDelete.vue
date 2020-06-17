@@ -1,28 +1,21 @@
 <template>
-  <div>
-
-  </div>
+  <div></div>
 </template>
 
 <script>
-import { mapActions } from "vuex";
-
 export default {
   name: "CommentDelete",
-  methods: {
-    ...mapActions(["deleteCommentDetail"])
-  },
-  computed: {
-    commentPK() {
-      return this.$route.params.commentPK;
-    }
-  },
   created() {
-    this.deleteCommentDetail(this.commentPK);
+    this.$router.push({
+      name: "ReviewDetail",
+      params: {
+        moviePK: this.$route.params.moviePK,
+        reviewPK: this.$route.params.reviewPK
+      }
+    });
   }
 };
 </script>
 
 <style>
-
 </style>

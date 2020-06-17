@@ -6,13 +6,13 @@
         <span>by. {{ comment.user.username}}</span>
         <div v-if="username === comment.user.username" class="etc__actions">
           <i class="fas fa-pencil-alt actions__edit" @click="clickEditBtn"></i>
-          <i class="far fa-trash-alt actions__delete"></i>
+          <i class="far fa-trash-alt actions__delete" @click="deleteComment"></i>
         </div>
       </div>
     </div>
     <div class="d-flex justify-content-between" v-else>
       <input type="text" v-model="comment.content" />
-      <i class="far fa-check-circle submit" @click="submitEdittedComment"></i>
+      <i class="far fa-check-circle submit" @click="editComment"></i>
     </div>
   </div>
 </template>
@@ -27,7 +27,9 @@ export default {
   },
   data() {
     return {
-      editing: false
+      editing: false,
+      moviePK: this.$route.params.moviePK,
+      reviewPK: this.$route.params.reviewPK
     };
   },
   computed: { ...mapState(["username"]) },
@@ -35,17 +37,25 @@ export default {
     clickEditBtn() {
       this.editing = true;
     },
-    ...mapActions(["putCommentDetail"]),
-    submitEdittedComment() {
+    ...mapActions(["putCommentDetail", "deleteCommentDetail"]),
+    editComment() {
       const editInfo = {
-        moviePK: this.$route.params.moviePK,
-        reviewPK: this.$route.params.reviewPK,
+        moviePK: this.moviePK,
+        reviewPK: this.reviewPK,
         commentPK: this.comment.id,
         commentData: {
           content: this.comment.content
         }
       };
       this.putCommentDetail(editInfo);
+    },
+    deleteComment() {
+      const deleteInfo = {
+        moviePK: this.moviePK,
+        reviewPK: this.reviewPK,
+        commentPK: this.comment.id
+      };
+      this.deleteCommentDetail(deleteInfo);
     }
   }
 };
