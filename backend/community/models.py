@@ -1,6 +1,5 @@
 from django.db import models
 from django.conf import settings
-from django.core.validators import RegexValidator
 
 class BaseModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
@@ -34,8 +33,7 @@ class Review(BaseModel):
     movie = models.ForeignKey(
         Movie, on_delete=models.CASCADE, related_name='reviews')
     title = models.CharField(max_length=100)
-    rating = models.CharField(max_length=4, validators=[
-                            RegexValidator(r"^\d[.]\d{2}$")], help_text="입력 예시: 9.55")
+    rating = models.CharField(max_length=1)
     content = models.TextField()
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reviews')

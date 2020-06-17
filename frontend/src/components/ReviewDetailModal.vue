@@ -6,6 +6,8 @@
         <h3>{{ selectedReview.title }}</h3>
         <p>{{ selectedReview.content }}</p>
       </div>
+      <button class="btn btn-primary" @click="toEditReview">수정하기</button>
+      <button class="btn btn-danger" @click="toDeleteReview">삭제하기</button>
       <div class="modal__column">
         <Comments v-if="selectedReview.comments.length > 0" :comments="selectedReview.comments"></Comments>
         <div v-else>아직 등록된 댓글이 없습니다.</div>
@@ -41,7 +43,19 @@ export default {
   // },
   // },
   methods: {
-    ...mapActions(["getReviewDetail"])
+    ...mapActions(["getReviewDetail"]),
+    toEditReview() {
+      this.$router.push({
+        name: "ReviewEdit",
+        params: { moviePK: this.moviePK, reviewPK: this.reviewPK },
+      })
+    },
+    toDeleteReview() {
+      this.$router.push({
+        name: "ReviewDelete",
+        params: { moviePK: this.moviePK, reviewPK: this.reviewPK },
+      })
+    }
   },
   updated() {
     console.log("updated");

@@ -25,7 +25,7 @@ class ReviewSerializer(serializers.ModelSerializer):
     created_at = serializers.DateTimeField(format="%Y년 %m월 %d일 %H:%M:%S", required=False)
     class Meta:
         model = Review
-        fields = ['id', 'title', 'content', 'movie', 'user', 'created_at']
+        fields = ['id', 'title', 'content', 'movie', 'user', 'created_at', 'rating']
 
 class MovieDetailSerializer(MovieSerializer):
     reviews = Movie.reviews
