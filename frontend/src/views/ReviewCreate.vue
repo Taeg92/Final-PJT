@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div class="background">
-      <img :src="backdrop_poster">
-    </div>
+    <div class="background" v-bind:style="{ backgroundImage: 'url(' + backdrop_poster + ')' }"></div>
     <div class="background-filter"></div>
     <div class="create-review container">
       <h3 class="text-light font-weight-bold mb-4">리뷰 작성</h3>
@@ -85,10 +83,10 @@ export default {
 .background {
   height: 100vh;
   position: absolute;
+  background-size: cover;
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
   z-index:-1;
 }
 .background-filter {
@@ -97,7 +95,6 @@ export default {
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
   z-index: -1;
 }
 .movie-post {

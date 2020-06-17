@@ -59,6 +59,7 @@ export default {
   height: 600px;
   width: 400px;
   border-radius: 5px;
+  z-index: 1;
 }
 
 .background {
@@ -67,7 +68,6 @@ export default {
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
   background-image: url("https://assets.nflxext.com/ffe/siteui/vlv3/3b48f428-24ed-4692-bb04-bc7771854131/fb5674c7-afc0-4c05-9f06-ef601019b114/KR-ko-20200302-popsignuptwoweeks-perspective_alpha_website_small.jpg");
   z-index: -1;
 }
@@ -77,7 +77,6 @@ export default {
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
   background: rgba(0, 0, 0, 0.5);
   z-index: -1;
 }
