@@ -2,8 +2,10 @@
   <div class="poster">
     <img
       :src="poster_path"
-      width="350"
-      height="500"
+      :class="{
+        poster__img: $route.name === 'Home',
+        'poster__img-sm': $route.name === 'MoviesAll',
+      }"
       @click="selectMovie"
     />
     <div class="poster__overlay"></div>
@@ -51,31 +53,13 @@ export default {
   transform: scale(1.1);
 }
 
-/* .poster__overlay {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.5);
-  opacity: 0;
+.poster__img {
+  width: 350px;
+  height: auto;
 }
 
-.poster__overlay:hover {
-  opacity: 1;
-} */
-/* .poster:after {
-  content: "";
-  display: block;
-  height: 100%;
-  width: 100%;
-  opacity: 0;
-  background: rgba(0, 0, 0, 0.5);
-  transition: all 1s;
+.poster__img-sm {
+  width: 100px;
+  height: auto;
 }
-
-.poster:hover:after {
-  opacity: 1;
-} */
 </style>

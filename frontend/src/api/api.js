@@ -6,6 +6,7 @@ export default {
     signup: "accounts/rest-auth/signup/",
     logout: "accounts/rest-auth/logout/",
     getUserData: (username) => `accounts/${username}/`,
+    recommend: "community/recommend/",
     movies: (moviePK) => {
       if (moviePK) {
         return `community/movies/${moviePK}/`;
@@ -30,7 +31,7 @@ export default {
       }
     },
     commentCreate(reviewPK) {
-      return `community/reviews/${reviewPK}/comments/`
+      return `community/reviews/${reviewPK}/comments/`;
     },
   },
 };

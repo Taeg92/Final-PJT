@@ -16,10 +16,10 @@ from rest_framework import generics
 class MovieList(APIView):
 
     def get(self, request, format=None):
-        movies = Movie.objects.all()[:10]
+        movies = Movie.objects.all()[:50]
         serializer = MovieSerializer(movies, many=True)
         return Response(serializer.data)
-    
+
     @permission_classes([IsSuperUser])
     def post(self, request, format=None):
         serializer = MovieSerializer(data=request.data)
@@ -27,18 +27,20 @@ class MovieList(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
     @permission_classes([IsSuperUser])
     def delete(self, request, pk, format=None):
         movie = get_object_or_404(Movie, pk=pk)
         movie.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
 class MovieRecommend(APIView):
     def get(self, request, format=None):
         movies = Movie.objects.all().order_by('?')[:10]
         serializer = MovieSerializer(movies, many=True)
         return Response(serializer.data)
+
 
 class MovieDetail(APIView):
 

@@ -1,12 +1,32 @@
 <template>
   <nav class="navbar navbar-expand-lg">
-    <router-link class="navbar-brand my-0 mr-md-auto font-weight-bold" to="/">Movie</router-link>
-    <button class="navbar-toggler toggler-example" type="button" data-toggle="collapse" data-target="#navbarNav"
-    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="dark-white-text"><i
-        class="fas fa-bars fa-1x"></i></span>
+    <router-link
+      class="navbar-brand my-0 mr-md-auto font-weight-bold"
+      to="/"
+      >Movie</router-link
+    >
+    <router-link
+      class="p-2 text-light ml-3"
+      to="/movies/all"
+      >All Movie</router-link
+    >
+    <button
+      class="navbar-toggler toggler-example"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="dark-white-text"
+        ><i class="fas fa-bars fa-1x"></i
+      ></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ml-auto d-flex justify-content-end align-items-center">
+      <ul
+        class="navbar-nav ml-auto d-flex justify-content-end align-items-center"
+      >
         <li v-if="this.$store.state.authToken">
           <span v-if="this.$store.state.user.avatar">
             <img class="user-avatar" :src="userAvatarURL" alt="avatar">
@@ -16,13 +36,28 @@
           </span>
         </li>
         <li class="nav-item mx-1 my-1">
-          <router-link class="p-2 text-light" v-if="!isLoggedIn" to="/login">Login</router-link>
+          <router-link
+            class="p-2 text-light"
+            v-if="!isLoggedIn"
+            to="/login"
+            >Login</router-link
+          >
         </li>
         <li class="nav-item mx-1 my-1">
-          <router-link class="p-2 text-light" v-if="isLoggedIn" to="/logout">Logout</router-link>
+          <router-link
+            class="p-2 text-light"
+            v-if="isLoggedIn"
+            to="/logout"
+            >Logout</router-link
+          >
         </li>
         <li class="nav-item mx-1 my-1">
-          <router-link class="btn btn-danger text-light" v-if="!isLoggedIn" to="/signup">Sign up</router-link>
+          <router-link
+            class="btn btn-danger text-light"
+            v-if="!isLoggedIn"
+            to="/signup"
+            >Sign up</router-link
+          >
         </li>
       </ul>
     </div>
@@ -61,19 +96,19 @@ export default {
 }
 .navbar a {
   text-decoration: none;
-  color: #e50a13
+  color: #e50a13;
 }
 
 /* #nav a.router-link-exact-active {
 } */
 .fa-1x {
-font-size: 1.5rem;
+  font-size: 1.5rem;
 }
 .navbar-toggler.toggler-example {
-cursor: pointer;
+  cursor: pointer;
 }
 .dark-white-text {
-color: white;
+  color: white;
 }
 .user-avatar {
   border-radius: 50%;

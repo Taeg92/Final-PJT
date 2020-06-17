@@ -71,10 +71,12 @@ export default {
     ...mapState(["movies"]),
   },
   methods: {
-    ...mapActions(["getMovies"]),
+    // ...mapActions(["getMovies"]),
+    ...mapActions(["getRecommendations"]),
   },
   created() {
-    this.getMovies();
+    // this.getMovies();
+    this.getRecommendations();
   },
 };
 </script>
