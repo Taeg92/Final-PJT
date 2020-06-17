@@ -7,6 +7,9 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ml-auto d-flex justify-content-end align-items-center">
+        <li v-if="this.$store.state.authToken">
+          {{ this.$store.state.username }}
+        </li>
         <li class="nav-item mx-1 my-1">
           <router-link class="p-2 text-light" v-if="!isLoggedIn" to="/login">Login</router-link>
         </li>
@@ -52,8 +55,8 @@ export default {
   color: #e50a13
 }
 
-#nav a.router-link-exact-active {
-}
+/* #nav a.router-link-exact-active {
+} */
 .fa-1x {
 font-size: 1.5rem;
 }
