@@ -12,6 +12,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     authToken: cookies.get("auth-token"),
+    username: null,
     movies: [],
     reviews: [],
     comments: [],
@@ -32,6 +33,9 @@ export default new Vuex.Store({
     SET_TOKEN(state, token) {
       state.authToken = token;
       cookies.set("auth-token", token);
+    },
+    SET_USERNAME(state, username) {
+      state.username = username;
     },
     SET_MOVIES(state, movies) {
       state.movies = movies;
@@ -117,7 +121,6 @@ export default new Vuex.Store({
         .catch((err) => console.log(err.response));
     },
     submitReview({ getters }, { moviePK, reviewData }) {
-      console.log('작성할게요')
       axios
         .post(
           API.DB_BASE + API.DB_ROUTES.reviews(moviePK),
@@ -165,7 +168,10 @@ export default new Vuex.Store({
         })
         .catch((err) => console.log(err.response));
     },
-    createComment({ getters }, { reviewPK, content }) {
+    createComment(
+      { getters },
+      { moviePK, reviewPK, content }
+    ) {
       axios
         .post(
           API.DB_BASE +
@@ -173,8 +179,12 @@ export default new Vuex.Store({
           { content },
           getters.config
         )
-        .then()
-          // router.push({ name: { CommentCreate } })
+        .then(() =>
+          router.push({
+            name: "CommentCreate",
+            params: { moviePK, reviewPK },
+          })
+        )
         .catch((err) => console.log(err));
     },
     getCommentDetail({ commit }, reviewPK) {
@@ -185,24 +195,38 @@ export default new Vuex.Store({
         })
         .catch((err) => console.log(err.response));
     },
-    putCommentDetail(_, { commentPK, commentData }) {
+    putCommentDetail(
+      { getters },
+      { moviePK, reviewPK, commentPK, commentData }
+    ) {
       axios
         .put(
           API.DB_BASE + API.DB_ROUTES.comments(commentPK),
-          commentData
+          commentData,
+          getters.config
         )
-        .then(() => {
-          router.push({ name: "Comments" });
-        })
+        .then(() =>
+          router.push({
+            name: "CommentEdit",
+            params: { moviePK, reviewPK },
+          })
+        )
         .catch((err) => console.log(err.response));
     },
-    deleteCommentDetail(_, commentPK) {
+    deleteCommentDetail(
+      { getters },
+      { moviePK, reviewPK, commentPK }
+    ) {
       axios
         .delete(
-          API.DB_BASE + API.DB_ROUTES.comments(commentPK)
+          API.DB_BASE + API.DB_ROUTES.comments(commentPK),
+          getters.config
         )
         .then(() => {
-          router.push({ name: "Comments" });
+          router.push({
+            name: "CommentDelete",
+            params: { moviePK, reviewPK, commentPK },
+          });
         })
         .catch((err) => console.log(err.response));
     },
@@ -211,6 +235,7 @@ export default new Vuex.Store({
         .post(API.DB_BASE + info.route, info.data)
         .then((res) => {
           commit("SET_TOKEN", res.data.key);
+          commit("SET_USERNAME", info.data.username);
           router.push({ name: "Home" });
         })
         .catch((err) => console.log(err.response));
@@ -238,6 +263,7 @@ export default new Vuex.Store({
         )
         .then(() => {
           commit("SET_TOKEN", null);
+          commit("SET_USERNAME", null);
           cookies.remove("auth-token");
           router.push({ name: "Home" });
         })
