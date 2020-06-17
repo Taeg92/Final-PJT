@@ -18,7 +18,7 @@ export default new Vuex.Store({
   ],
   state: {
     authToken: cookies.get("auth-token"),
-    username: null,
+    user: null,
     movies: [],
     reviews: [],
     comments: [],
@@ -40,8 +40,8 @@ export default new Vuex.Store({
       state.authToken = token;
       cookies.set("auth-token", token);
     },
-    SET_USERNAME(state, username) {
-      state.username = username;
+    SET_USER(state, user) {
+      state.user = user;
     },
     SET_MOVIES(state, movies) {
       state.movies = movies;
@@ -236,12 +236,20 @@ export default new Vuex.Store({
         })
         .catch((err) => console.log(err.response));
     },
-    postAuthData({ commit }, info) {
+    getUserData({ commit }, username) {
+      axios
+        .get(API.DB_BASE + API.DB_ROUTES.getUserData(username))
+        .then((res) => {
+          commit("SET_USER", res.data);
+        })
+        .catch((err) => console.log(err.response));
+    },
+    postAuthData({ commit, dispatch }, info) {
       axios
         .post(API.DB_BASE + info.route, info.data)
         .then((res) => {
           commit("SET_TOKEN", res.data.key);
-          commit("SET_USERNAME", info.data.username);
+          dispatch("getUserData", info.data.username)
           router.push({ name: "Home" });
         })
         .catch((err) => console.log(err.response));
