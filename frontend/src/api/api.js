@@ -5,6 +5,7 @@ export default {
     login: "accounts/rest-auth/login/",
     signup: "accounts/rest-auth/signup/",
     logout: "accounts/rest-auth/logout/",
+    getUserData: (username) => `accounts/${username}/`,
     movies: (moviePK) => {
       if (moviePK) {
         return `community/movies/${moviePK}/`;

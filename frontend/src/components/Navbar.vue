@@ -8,7 +8,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ml-auto d-flex justify-content-end align-items-center">
         <li v-if="this.$store.state.authToken">
-          {{ this.$store.state.username }}
+          <img class="user-avatar" :src="userAvatarURL" alt="">
         </li>
         <li class="nav-item mx-1 my-1">
           <router-link class="p-2 text-light" v-if="!isLoggedIn" to="/login">Login</router-link>
@@ -26,11 +26,15 @@
 
 <script>
 import { mapGetters } from "vuex";
+import API from "../api/api.js";
 
 export default {
   name: "Navbar",
   computed: {
     ...mapGetters(["isLoggedIn"]),
+    userAvatarURL() {
+      return API.DB_BASE + this.$store.state.user.avatar.slice(1,)
+    }
   },
 };
 </script>
@@ -65,5 +69,10 @@ cursor: pointer;
 }
 .dark-white-text {
 color: white;
+}
+.user-avatar {
+  border-radius: 50%;
+  height: 40px;
+  background: white;
 }
 </style>
