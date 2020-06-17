@@ -171,9 +171,8 @@ export default new Vuex.Store({
           { content },
           getters.config
         )
-        .then(() =>
-          router.push({ name: { CommentCreate } })
-        )
+        .then()
+          // router.push({ name: { CommentCreate } })
         .catch((err) => console.log(err));
     },
     getCommentDetail({ commit }, reviewPK) {

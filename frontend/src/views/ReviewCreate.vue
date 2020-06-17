@@ -27,6 +27,16 @@
             />
             <small><span class="text-muted d-block mt-1">리뷰 내용을 입력해주세요.</span></small>
           </div>
+          <div class="my-3">
+            <div class="d-flex justify-content-around">
+              <i class="fas fa-star fa-3x" :class="{onStar: isChecked(1)}" id="1" @click="getRating" style="cursor: pointer"></i>
+              <i class="fas fa-star fa-3x" :class="{onStar: isChecked(2)}" id="2" @click="getRating" style="cursor: pointer"></i>
+              <i class="fas fa-star fa-3x" :class="{onStar: isChecked(3)}" id="3" @click="getRating" style="cursor: pointer"></i>
+              <i class="fas fa-star fa-3x" :class="{onStar: isChecked(4)}" id="4" @click="getRating" style="cursor: pointer"></i>
+              <i class="fas fa-star fa-3x" :class="{onStar: isChecked(5)}" id="5" @click="getRating" style="cursor: pointer"></i>
+            </div>
+            <small><span class="text-muted d-block mt-2">평점을 입력해주세요.</span></small>
+          </div>
           <button class="form-control btn-danger mt-5" @click="submitReview(submitInfo)">리뷰 작성</button>
         </div>
       </div>
@@ -45,7 +55,8 @@ export default {
         moviePK: this.$route.params.moviePK,
         reviewData: {
           title: "",
-          content: ""
+          content: "",
+          rating: null
         }
       },
       backdrop_poster: null,
@@ -61,6 +72,16 @@ export default {
       this.backdrop_poster = "https://image.tmdb.org/t/p/original" + this.selectedMovie.backdrop_path
       this.movie_poster = "https://image.tmdb.org/t/p/original" + this.selectedMovie.poster_path
     },
+    getRating(event) {
+      this.submitInfo.reviewData.rating = event.target.id
+    },
+    isChecked(value) {
+      if (value <= this.submitInfo.reviewData.rating) {
+        return true
+      } else {
+        return false
+      }
+    }
   },
   watch: {
     'selectedMovie': 'changeURL'
@@ -77,7 +98,7 @@ export default {
   background: rgba(0, 0, 0, 0.7);
   padding: 50px;
   height: 600px;
-  width: 800px;
+  width: 900px;
   border-radius: 5px;
 }
 .background {
@@ -99,5 +120,9 @@ export default {
 }
 .movie-post {
   border-radius: 15px;
+}
+
+.onStar {
+  color: orange;
 }
 </style>
