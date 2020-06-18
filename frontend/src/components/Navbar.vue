@@ -20,12 +20,10 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ml-auto d-flex justify-content-end align-items-center navlist">
         <li v-if="loginUser" class="navlist__user">
-          <span v-if="userAvatarURL" class="d-flex align-items-center">
-            <img class="user-avatar" :src="userAvatarURL" alt="avatar" />
+          <span class="d-flex align-items-center">
+            <img v-if="userAvatarURL" class="user-avatar" :src="userAvatarURL" alt="avatar" />
+            <i v-else class="fas fa-user fa-2x"></i>
             {{ loginUser.username }} 님,
-          </span>
-          <span v-else>
-            <i class="fas fa-user fa-2x"></i>
           </span>
         </li>
         <li v-if="isLoggedIn" class="nav-item mx-1 my-1 navlist__logout">
