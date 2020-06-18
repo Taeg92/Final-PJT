@@ -7,13 +7,9 @@ import router from "../router";
 import axios from "axios";
 import cookies from "vue-cookies";
 
-import createPersistedState from "vuex-persistedstate";
-
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  modules: {},
-  plugins: [createPersistedState()],
   state: {
     authToken: cookies.get("auth-token"),
     user: null,
@@ -246,7 +242,9 @@ export default new Vuex.Store({
     },
     getUserData({ commit }, username) {
       axios
-        .get(API.DB_BASE + API.DB_ROUTES.getUserData(username))
+        .get(
+          API.DB_BASE + API.DB_ROUTES.getUserData(username)
+        )
         .then((res) => {
           commit("SET_USER", res.data);
         })
@@ -257,7 +255,7 @@ export default new Vuex.Store({
         .post(API.DB_BASE + info.route, info.data)
         .then((res) => {
           commit("SET_TOKEN", res.data.key);
-          dispatch("getUserData", info.data.username)
+          dispatch("getUserData", info.data.username);
           router.push({ name: "Home" });
         })
         .catch((err) => console.log(err.response));

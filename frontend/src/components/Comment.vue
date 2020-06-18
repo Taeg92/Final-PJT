@@ -2,7 +2,8 @@
   <div
     class="comment"
     :class="{
-      mycomment: user.username === comment.user.username,
+      mycomment:
+        user && user.username === comment.user.username,
     }"
   >
     <div v-if="!editing">
@@ -25,7 +26,9 @@
           </span>
         </span>
         <div
-          v-if="user.username === comment.user.username"
+          v-if="
+            user && user.username === comment.user.username
+          "
           class="etc__actions"
         >
           <i

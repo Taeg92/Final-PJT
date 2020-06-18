@@ -8,13 +8,12 @@ import { mapActions } from "vuex";
 export default {
   name: "Logout",
   methods: {
-    ...mapActions(["logout"])
+    ...mapActions(["logout"]),
   },
   created() {
     this.logout();
-  }
+  },
 };
 </script>
 
-<style>
-</style>
+<style></style>

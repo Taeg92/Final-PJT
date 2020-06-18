@@ -27,9 +27,13 @@
       <ul
         class="navbar-nav ml-auto d-flex justify-content-end align-items-center"
       >
-        <li v-if="this.$store.state.authToken">
-          <span v-if="this.$store.state.user.avatar">
-            <img class="user-avatar" :src="userAvatarURL" alt="avatar">
+        <li v-if="user">
+          <span v-if="user.avatarURL">
+            <img
+              class="user-avatar"
+              :src="userAvatarURL"
+              alt="avatar"
+            />
           </span>
           <span v-else>
             <i class="fas fa-user fa-2x"></i>
@@ -65,16 +69,19 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import API from "../api/api.js";
 
 export default {
   name: "Navbar",
   computed: {
     ...mapGetters(["isLoggedIn"]),
+    ...mapState(["user"]),
     userAvatarURL() {
-      return API.DB_BASE + this.$store.state.user.avatar.slice(1,)
-    }
+      return (
+        API.DB_BASE + this.$store.state.user.avatar.slice(1)
+      );
+    },
   },
 };
 </script>

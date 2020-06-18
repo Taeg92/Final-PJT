@@ -20,7 +20,8 @@
         <p>{{ selectedReview.content }}</p>
         <div
           v-if="
-            user.username === selectedReview.user.username
+            user &&
+              user.username === selectedReview.user.username
           "
           class="btns"
         >
