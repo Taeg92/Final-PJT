@@ -21,8 +21,6 @@ class Movie(models.Model):
     poster_path = models.CharField(max_length=150)
     backdrop_path = models.CharField(max_length=150)
     genres = models.ManyToManyField("Genre")
-    liked_users = models.ManyToManyField(
-        settings.AUTH_USER_MODEL, related_name='like_movies')
 
 class Genre(models.Model):
     name = models.CharField(max_length=150)
@@ -37,8 +35,6 @@ class Review(BaseModel):
     content = models.TextField()
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reviews')
-    liked_users = models.ManyToManyField(
-        settings.AUTH_USER_MODEL, related_name='like_reviews')
 
     class Meta:
         ordering = [
