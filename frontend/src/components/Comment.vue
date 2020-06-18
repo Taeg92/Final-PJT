@@ -128,10 +128,12 @@ export default {
 .actions__edit {
   color: rgb(9, 9, 134);
   margin-right: 6px;
+  cursor: pointer;
 }
 
 .actions__delete {
   color: red;
+  cursor: pointer;
 }
 
 input {
@@ -145,16 +147,14 @@ input:focus {
   outline: none;
 }
 
-.submit {
-  font-size: 10px;
-  text-align: right;
-  margin-top: 5px;
-  padding-right: 10px;
-  color: rgb(9, 9, 134);
+.mycomment {
+  background-color: rgb(255, 237, 189);
 }
 
-.mycomment {
-  /* background-color: rgb(255, 168, 168); */
-  background-color: rgb(255, 230, 161);
+.user-avatar {
+  border-radius: 50%;
+  height: 15px;
+  background: white;
+  margin-right: 5px;
 }
 </style>

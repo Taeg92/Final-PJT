@@ -237,6 +237,7 @@ img {
   opacity: 0.9;
   cursor: pointer;
   transition: background-color 0.1s ease-in-out;
+  cursor: pointer;
 }
 
 .detail__review-create-btn:hover {
@@ -260,6 +261,7 @@ img {
   font-size: 20px;
   margin-bottom: 10px;
   transition: background-color 0.2s ease-in-out;
+  cursor: pointer;
 }
 
 .detail__reviews-more i:hover {

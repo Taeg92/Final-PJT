@@ -1,6 +1,6 @@
 <template>
   <div v-if="selectedReview" class="review-modal">
-    <div class="review-modal__container">
+    <div class="modal__container">
       <header class="modal__close-btn">x</header>
       <div class="modal__column column-left">
         <h4>{{ selectedReview.title }}</h4>
@@ -41,7 +41,7 @@
           :comments="selectedReview.comments"
         ></Comments>
         <div v-else>아직 등록된 댓글이 없습니다.</div>
-        <CommentCreateForm />
+        <CommentForm />
       </div>
     </div>
   </div>
@@ -50,14 +50,14 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import Comments from "./Comments";
-import CommentCreateForm from "./CommentCreateForm";
+import CommentForm from "./CommentForm";
 import API from "../api/api.js";
 
 export default {
   name: "ReviewDetailModal",
   components: {
     Comments,
-    CommentCreateForm,
+    CommentForm,
   },
   computed: {
     ...mapState(["selectedReview", "user"]),
@@ -101,31 +101,31 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .review-modal {
-  /* background-color: ; */
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  width: 100%;
-  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: black !important;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: black;
 }
 
-.review-modal__container {
+.modal__container {
+  position: relative;
+  display: flex;
   width: 60%;
   height: 70%;
   background-color: white;
   border-radius: 20px;
-  display: flex;
-  position: relative;
 }
 
-.review-modal__container header {
+.modal__container header {
   position: absolute;
   right: 10px;
   font-size: 25px;
@@ -133,10 +133,12 @@ export default {
   color: rgba(0, 0, 0, 0.6);
 }
 
+.modal__close-btn {
+  cursor: pointer;
+}
+
 .modal__column {
   width: 50%;
-  /* margin: 40px 0; */
-  padding: 50px 30px;
 }
 
 .column-left {
@@ -147,6 +149,7 @@ export default {
   border-bottom-left-radius: 20px;
   height: 100%;
   overflow-y: scroll;
+  padding: 40px 30px;
 }
 
 .column-right {
@@ -154,17 +157,21 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding: 40px 20px;
+  padding-bottom: 20px;
 }
 
 .btns {
   font-size: 20px;
   text-align: right;
   color: white;
+  cursor: pointer;
 }
 
 .btns__btn:first-child {
   margin-right: 15px;
 }
+
 .user-avatar {
   border-radius: 50%;
   height: 20px;
