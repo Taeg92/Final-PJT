@@ -27,8 +27,8 @@
       <ul
         class="navbar-nav ml-auto d-flex justify-content-end align-items-center"
       >
-        <li v-if="user">
-          <span v-if="user.avatarURL">
+        <li v-if="isLoggedIn">
+          <span v-if="loginUser">
             <img
               class="user-avatar"
               :src="userAvatarURL"
@@ -69,20 +69,34 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 import API from "../api/api.js";
 
 export default {
   name: "Navbar",
+  data() {
+    return {
+      userAvatarURL: null,
+      loginUser: null,
+    }
+  },
   computed: {
     ...mapGetters(["isLoggedIn"]),
     ...mapState(["user"]),
-    userAvatarURL() {
-      return (
-        API.DB_BASE + this.$store.state.user.avatar.slice(1)
-      );
+  },
+  methods: {
+    ...mapActions(['getUserData']),
+    changeURL() {
+      this.userAvatarURL = API.DB_BASE + this.$store.state.user.avatar.slice(1)
+      this.loginUser = this.$store.state.user
     },
   },
+  watch: {
+    'user': 'changeURL'
+  },
+  created() {
+    this.getUserData()
+  }
 };
 </script>
 
