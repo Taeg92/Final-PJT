@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
-import MoviesAll from "../views/MoviesAll.vue";
+import Home from "../views/movies/Home.vue";
+import MoviesAll from "../views/movies/MoviesAll.vue";
 import MovieDetail from "../views/MovieDetail.vue";
 import Signup from "../views/accounts/Signup.vue";
 import Login from "../views/accounts/Login.vue";
@@ -17,6 +17,15 @@ import CommentDelete from "../views/CommentDelete.vue";
 Vue.use(VueRouter);
 
 const routes = [
+  {
+    path: "/",
+    redirect: { name: "Home" },
+  },
+  {
+    path: "/movies/recommend",
+    name: "Home",
+    component: Home,
+  },
   {
     path: "/movies/all",
     name: "MoviesAll",
@@ -90,11 +99,7 @@ const routes = [
     name: "Logout",
     component: Logout,
   },
-  {
-    path: "/",
-    name: "Home",
-    component: Home,
-  },
+
   // component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
 ];
 

@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import Poster from "../components/Poster";
+import Poster from "../../components/Poster";
 import { mapState, mapActions } from "vuex";
 
 export default {
