@@ -1,16 +1,8 @@
 <template>
   <nav class="navbar navbar-expand-lg">
     <div>
-      <router-link
-        class="navbar-brand my-0 mr-md-auto font-weight-bold"
-        to="/"
-        >MEFLIX</router-link
-      >
-      <router-link
-        class="p-2 text-light ml-3"
-        to="/movies/all"
-        >All Movie</router-link
-      >
+      <router-link class="navbar-brand my-0 mr-md-auto font-weight-bold" to="/">METFLIX</router-link>
+      <router-link class="p-2 text-light ml-3" to="/movies/all">All Movie</router-link>
     </div>
     <button
       class="navbar-toggler toggler-example"
@@ -21,52 +13,29 @@
       aria-expanded="false"
       aria-label="Toggle navigation"
     >
-      <span class="dark-white-text"
-        ><i class="fas fa-bars fa-1x"></i
-      ></span>
+      <span class="dark-white-text">
+        <i class="fas fa-bars fa-1x"></i>
+      </span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul
-        class="navbar-nav ml-auto d-flex justify-content-end align-items-center"
-      >
+      <ul class="navbar-nav ml-auto d-flex justify-content-end align-items-center">
         <li v-if="isLoggedIn">
-          <span
-            v-if="loginUser"
-            class="d-flex align-items-center"
-          >
-            <img
-              class="user-avatar"
-              :src="userAvatarURL"
-              alt="avatar"
-            />{{ loginUser.username }} 님,
+          <span v-if="loginUser" class="d-flex align-items-center">
+            <img class="user-avatar" :src="userAvatarURL" alt="avatar" />
+            {{ loginUser.username }} 님,
           </span>
           <span v-else>
             <i class="fas fa-user fa-2x"></i>
           </span>
         </li>
         <li class="nav-item mx-1 my-1">
-          <router-link
-            class="p-2 text-light"
-            v-if="!isLoggedIn"
-            to="/login"
-            >Login</router-link
-          >
+          <router-link class="p-2 text-light" v-if="!isLoggedIn" to="/login">Login</router-link>
         </li>
         <li class="nav-item mx-1 my-1">
-          <router-link
-            class="p-2 text-light"
-            v-if="isLoggedIn"
-            to="/logout"
-            >Logout</router-link
-          >
+          <router-link class="p-2 text-light" v-if="isLoggedIn" to="/logout">Logout</router-link>
         </li>
         <li class="nav-item mx-1 my-1">
-          <router-link
-            class="btn btn-danger text-light"
-            v-if="!isLoggedIn"
-            to="/signup"
-            >Sign up</router-link
-          >
+          <router-link class="btn btn-danger text-light" v-if="!isLoggedIn" to="/signup">Sign up</router-link>
         </li>
       </ul>
     </div>
@@ -82,28 +51,26 @@ export default {
   data() {
     return {
       userAvatarURL: null,
-      loginUser: null,
+      loginUser: null
     };
   },
   computed: {
     ...mapGetters(["isLoggedIn"]),
-    ...mapState(["user"]),
+    ...mapState(["user"])
   },
   methods: {
     ...mapActions(["getUserData"]),
     changeURL() {
-      this.userAvatarURL =
-        API.DB_BASE +
-        this.$store.state.user.avatar.slice(1);
+      this.userAvatarURL = API.DB_BASE + this.$store.state.user.avatar.slice(1);
       this.loginUser = this.$store.state.user;
-    },
+    }
   },
   watch: {
-    user: "changeURL",
+    user: "changeURL"
   },
   created() {
     this.getUserData();
-  },
+  }
 };
 </script>
 
