@@ -9,5 +9,5 @@ urlpatterns = [
     path('api-jwt-auth/', obtain_jwt_token),
     path('api-jwt-auth/refresh/', refresh_jwt_token),
     path('api-jwt-auth/verify/', verify_jwt_token),
-    path('user/', views.UserInfo.as_view(), name='UserInfo'),
+    path('userinfo/', views.UserInfo.as_view(), name='UserInfo'),
 ]
