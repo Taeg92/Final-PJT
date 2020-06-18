@@ -114,6 +114,7 @@ export default {
 }
 .navbar {
   background: black;
+  height: 80px;
 }
 .navbar a {
   text-decoration: none;
