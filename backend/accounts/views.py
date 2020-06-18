@@ -4,10 +4,13 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import UserSerializer
 from .models import User
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAuthenticated
 
 class UserInfo(APIView):
 
-    def get(self, request, username, format=None):
-        user = get_object_or_404(User, username=username)
+    @permission_classes([IsAuthenticated])
+    def get(self, request, format=None):
+        user = request.user
         serializer = UserSerializer(user)
         return Response(serializer.data)
