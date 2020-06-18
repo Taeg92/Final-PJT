@@ -6,7 +6,6 @@ import MovieDetail from "../views/MovieDetail.vue";
 import Signup from "../views/accounts/Signup.vue";
 import Login from "../views/accounts/Login.vue";
 import Logout from "../views/accounts/Logout.vue";
-import Reviews from "../views/Reviews.vue";
 import ReviewDelete from "../views/ReviewDelete.vue";
 import ReviewCreate from "../views/ReviewCreate.vue";
 import ReviewEdit from "../views/ReviewEdit.vue";
@@ -64,11 +63,6 @@ const routes = [
     component: ReviewEdit,
   },
   {
-    path: "/reviews",
-    name: "Reviews",
-    component: Reviews,
-  },
-  {
     path:
       "/comments/create/movie/:moviePK/review/:reviewPK",
     name: "CommentCreate",
@@ -103,8 +97,32 @@ const routes = [
 ];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const publicPages = [
+    "Home",
+    "MoviesAll",
+    "MovieDetail",
+    "MovieReviews",
+    "ReviewDetail",
+    "Signup",
+    "Login",
+  ];
+  const authPages = ["Signup", "Login"];
+
+  const authRequired = !publicPages.includes(to.name); // 로그인 해야 함.
+  const unauthRequired = authPages.includes(to.name); // 로그인 해서는 안됨
+  const isLoggedIn = !!Vue.$cookies.isKey("auth-token");
+
+  if (unauthRequired && isLoggedIn) {
+    next("/");
+  }
+  authRequired && !isLoggedIn
+    ? next({ name: "Login" })
+    : next();
 });
 
 export default router;
