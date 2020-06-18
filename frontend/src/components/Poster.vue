@@ -18,23 +18,20 @@ import { mapActions } from "vuex";
 export default {
   name: "poster",
   props: {
-    movie: Object,
+    movie: Object
   },
   computed: {
     poster_path() {
-      return (
-        "https://image.tmdb.org/t/p/original" +
-        this.movie.poster_path
-      );
-    },
+      return "https://image.tmdb.org/t/p/original" + this.movie.poster_path;
+    }
   },
   methods: {
     ...mapActions(["clearMovie"]),
     selectMovie() {
       this.clearMovie();
       this.$router.push(`/movies/${this.movie.id}`);
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -54,7 +51,7 @@ export default {
 }
 
 .poster__img {
-  width: 350px;
+  width: 300px;
   height: auto;
 }
 

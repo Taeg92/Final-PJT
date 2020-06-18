@@ -6,11 +6,7 @@
         <h4>{{ selectedReview.title }}</h4>
         <div class="text-right mb-2">
           <span v-if="selectedReview.user.avatar">
-            <img
-              class="user-avatar"
-              :src="userAvatarURL"
-              alt=""
-            />
+            <img class="user-avatar" :src="userAvatarURL" alt />
           </span>
           <span v-else>
             <i class="fas fa-user"></i>
@@ -25,21 +21,12 @@
           "
           class="btns"
         >
-          <i
-            class="fas fa-pencil-alt btns__btn btn__edit"
-            @click="toEditReview"
-          ></i>
-          <i
-            class="far fa-trash-alt btns__btn btn__delete"
-            @click="toDeleteReview"
-          ></i>
+          <i class="fas fa-pencil-alt btns__btn btn__edit" @click="toEditReview"></i>
+          <i class="far fa-trash-alt btns__btn btn__delete" @click="toDeleteReview"></i>
         </div>
       </div>
       <div class="modal__column column-right">
-        <Comments
-          v-if="selectedReview.comments.length > 0"
-          :comments="selectedReview.comments"
-        ></Comments>
+        <Comments v-if="selectedReview.comments.length > 0" :comments="selectedReview.comments"></Comments>
         <div v-else>아직 등록된 댓글이 없습니다.</div>
         <CommentForm />
       </div>
@@ -57,7 +44,7 @@ export default {
   name: "ReviewDetailModal",
   components: {
     Comments,
-    CommentForm,
+    CommentForm
   },
   computed: {
     ...mapState(["selectedReview", "user"]),
@@ -68,11 +55,8 @@ export default {
       return this.$route.params.moviePK;
     },
     userAvatarURL() {
-      return (
-        API.DB_BASE +
-        this.selectedReview.user.avatar.slice(1)
-      );
-    },
+      return API.DB_BASE + this.selectedReview.user.avatar.slice(1);
+    }
   },
   methods: {
     ...mapActions(["getReviewDetail"]),
@@ -81,8 +65,8 @@ export default {
         name: "ReviewEdit",
         params: {
           moviePK: this.moviePK,
-          reviewPK: this.reviewPK,
-        },
+          reviewPK: this.reviewPK
+        }
       });
     },
     toDeleteReview() {
@@ -90,14 +74,14 @@ export default {
         name: "ReviewDelete",
         params: {
           moviePK: this.moviePK,
-          reviewPK: this.reviewPK,
-        },
+          reviewPK: this.reviewPK
+        }
       });
-    },
+    }
   },
   created() {
     this.getReviewDetail(this.reviewPK);
-  },
+  }
 };
 </script>
 
@@ -110,6 +94,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 40px;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.7);

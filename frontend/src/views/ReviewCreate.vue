@@ -8,39 +8,25 @@
     ></div>
     <div class="background-filter"></div>
     <div class="create-container">
-      <div
-        class="container__cancel-btn"
-        @click="backToDetail"
-      >
-        x
-      </div>
+      <div class="container__cancel-btn" @click="backToDetail">x</div>
       <div class="container__contents">
         <div class="contents__column">
           <img :src="movie_poster" />
         </div>
         <div class="contents__column">
-          <input
-            class="form-control"
-            id="title"
-            v-model="submitInfo.reviewData.title"
-            type="text"
-          />
-          <small
-            ><span class="text-muted d-block my-1"
-              >제목을 입력해주세요.</span
-            ></small
-          >
+          <input class="form-control" id="title" v-model="submitInfo.reviewData.title" type="text" />
+          <small>
+            <span class="text-muted d-block my-1">제목을 입력해주세요.</span>
+          </small>
           <textarea
             class="form-control"
             id="content"
             v-model="submitInfo.reviewData.content"
             rows="7"
           />
-          <small
-            ><span class="text-muted d-block mt-1"
-              >리뷰 내용을 입력해주세요.</span
-            ></small
-          >
+          <small>
+            <span class="text-muted d-block mt-1">리뷰 내용을 입력해주세요.</span>
+          </small>
           <div class="contents__rating">
             <i
               class="fas fa-star fa-3x"
@@ -78,17 +64,10 @@
               style="cursor: pointer"
             ></i>
           </div>
-          <small
-            ><span class="text-muted d-block mt-2"
-              >평점을 입력해주세요.</span
-            ></small
-          >
-          <button
-            class="form-control btn-danger mt-2"
-            @click="submitReview(submitInfo)"
-          >
-            리뷰 작성
-          </button>
+          <small>
+            <span class="text-muted d-block mt-2">평점을 입력해주세요.</span>
+          </small>
+          <button class="form-control btn-danger mt-2" @click="submitReview(submitInfo)">리뷰 작성</button>
         </div>
       </div>
     </div>
@@ -107,15 +86,15 @@ export default {
         reviewData: {
           title: "",
           content: "",
-          rating: null,
-        },
+          rating: null
+        }
       },
       backdrop_poster: null,
-      movie_poster: null,
+      movie_poster: null
     };
   },
   computed: {
-    ...mapState(["selectedMovie"]),
+    ...mapState(["selectedMovie"])
   },
   methods: {
     ...mapActions(["getMovieDetail", "submitReview"]),
@@ -124,8 +103,7 @@ export default {
         "https://image.tmdb.org/t/p/original" +
         this.selectedMovie.backdrop_path;
       this.movie_poster =
-        "https://image.tmdb.org/t/p/original" +
-        this.selectedMovie.poster_path;
+        "https://image.tmdb.org/t/p/original" + this.selectedMovie.poster_path;
     },
     getRating(event) {
       this.submitInfo.reviewData.rating = event.target.id;
@@ -140,16 +118,16 @@ export default {
     backToDetail() {
       this.$router.push({
         name: "MovieDetail",
-        params: { moviePK: this.submitInfo.moviePK },
+        params: { moviePK: this.submitInfo.moviePK }
       });
-    },
+    }
   },
   watch: {
-    selectedMovie: "changeURL",
+    selectedMovie: "changeURL"
   },
   created() {
     this.getMovieDetail(this.submitInfo.moviePK);
-  },
+  }
 };
 </script>
 
@@ -183,12 +161,14 @@ export default {
 
 .create-container {
   position: relative;
+  display: flex;
+  align-items: center;
   height: 80%;
   width: 70%;
   min-width: 650px;
   background: rgba(0, 0, 0, 0.7);
   border-radius: 5px;
-  padding: 50px;
+  padding: 0 50px;
   z-index: 5;
 }
 

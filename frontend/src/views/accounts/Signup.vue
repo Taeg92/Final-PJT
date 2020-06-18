@@ -76,10 +76,10 @@ export default {
 }
 
 .signup-container {
-  width: 30%;
+  width: 400px;
   height: 80%;
   background: rgba(0, 0, 0, 0.8);
-  padding: 50px;
+  padding: 30px;
   border-radius: 5px;
   z-index: 5;
 }

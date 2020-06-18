@@ -1,18 +1,8 @@
 <template>
   <div class="home">
-    <Poster
-      v-for="movie in movies"
-      :key="movie.id"
-      :movie="movie"
-    />
-    <i
-      class="fas fa-chevron-circle-left"
-      @click="scrollLeft"
-    ></i>
-    <i
-      class="fas fa-chevron-circle-right"
-      @click="scrollRight"
-    ></i>
+    <Poster v-for="movie in movies" :key="movie.id" :movie="movie" />
+    <i class="fas fa-chevron-circle-left" @click="scrollLeft"></i>
+    <i class="fas fa-chevron-circle-right" @click="scrollRight"></i>
   </div>
 </template>
 
@@ -26,10 +16,10 @@ export default {
     return {};
   },
   components: {
-    Poster,
+    Poster
   },
   computed: {
-    ...mapState(["movies"]),
+    ...mapState(["movies"])
   },
   methods: {
     ...mapActions(["getRecommendations"]),
@@ -53,18 +43,20 @@ export default {
     },
     scrollRight() {
       this.sideScroll("left", 20, 360, 20);
-    },
+    }
   },
   created() {
     this.getRecommendations();
-  },
+  }
 };
 </script>
 
 <style scoped>
 .home {
   width: 100%;
+  height: 100%;
   display: flex;
+  align-items: center;
   overflow: scroll;
   padding: 40px 20px;
   padding-right: 0;

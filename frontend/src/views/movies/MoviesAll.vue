@@ -1,10 +1,6 @@
 <template>
   <div class="movies-all">
-    <Poster
-      v-for="movie in movies"
-      :key="movie.id"
-      :movie="movie"
-    />
+    <Poster v-for="movie in movies" :key="movie.id" :movie="movie" />
   </div>
 </template>
 
@@ -15,17 +11,17 @@ import { mapState, mapActions } from "vuex";
 export default {
   name: "MoviesAll",
   components: {
-    Poster,
+    Poster
   },
   computed: {
-    ...mapState(["movies"]),
+    ...mapState(["movies"])
   },
   methods: {
-    ...mapActions(["getMovies"]),
+    ...mapActions(["getMovies"])
   },
   created() {
     this.getMovies();
-  },
+  }
 };
 </script>
 
@@ -35,6 +31,5 @@ export default {
   flex-wrap: wrap;
   padding: 40px 20px;
   padding-right: 0px;
-  background-color: black;
 }
 </style>

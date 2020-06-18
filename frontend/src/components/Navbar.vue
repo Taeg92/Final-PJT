@@ -2,7 +2,7 @@
   <nav class="navbar navbar-expand-lg">
     <div>
       <router-link class="navbar-brand my-0 mr-md-auto font-weight-bold" to="/">METFLIX</router-link>
-      <router-link class="p-2 text-light ml-3" to="/movies/all">All Movie</router-link>
+      <router-link class="p-2 text-light ml-3" to="/movies/all">All Movies</router-link>
     </div>
     <button
       class="navbar-toggler toggler-example"
@@ -18,8 +18,8 @@
       </span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ml-auto d-flex justify-content-end align-items-center">
-        <li v-if="isLoggedIn">
+      <ul class="navbar-nav ml-auto d-flex justify-content-end align-items-center navlist">
+        <li v-if="isLoggedIn" class="navlist__user">
           <span v-if="loginUser" class="d-flex align-items-center">
             <img class="user-avatar" :src="userAvatarURL" alt="avatar" />
             {{ loginUser.username }} 님,
@@ -28,14 +28,18 @@
             <i class="fas fa-user fa-2x"></i>
           </span>
         </li>
-        <li class="nav-item mx-1 my-1">
-          <router-link class="p-2 text-light" v-if="!isLoggedIn" to="/login">Login</router-link>
+        <li v-if="isLoggedIn" class="nav-item mx-1 my-1 navlist__logout">
+          <router-link class="p-2 text-light" to="/logout">Logout</router-link>
         </li>
-        <li class="nav-item mx-1 my-1">
-          <router-link class="p-2 text-light" v-if="isLoggedIn" to="/logout">Logout</router-link>
+        <li v-if="!isLoggedIn" class="nav-item mx-1 my-1 navlist__login">
+          <router-link class="p-2 text-light" to="/login">Login</router-link>
         </li>
-        <li class="nav-item mx-1 my-1">
-          <router-link class="btn btn-danger text-light" v-if="!isLoggedIn" to="/signup">Sign up</router-link>
+        <li class="nav-item mx-1 my-1 navlist__signup">
+          <router-link
+            v-if="!isLoggedIn"
+            class="btn btn-sm btn-danger text-light"
+            to="/signup"
+          >Sign up</router-link>
         </li>
       </ul>
     </div>
@@ -69,45 +73,45 @@ export default {
     user: "changeURL"
   },
   created() {
-    this.getUserData();
+    if (this.isLoggedIn) {
+      this.getUserData();
+    }
   }
 };
 </script>
 
 <style scoped>
-#nav {
+.navbar {
   -webkit-box-shadow: 0px -1px 25px 3px rgba(255, 255, 255, 0.1) !important;
   -moz-box-shadow: 0px -1px 25px 3px rgba(255, 255, 255, 0.1) !important;
   box-shadow: 0px -1px 25px 3px rgba(255, 255, 255, 0.1) !important;
+  z-index: 50;
 }
 
-#nav a {
-  text-decoration: none;
-  font-weight: bold;
-  color: #e50a13;
-}
-.navbar {
-  background: black;
-  height: 80px;
-}
 .navbar a {
   text-decoration: none;
   color: #e50a13;
 }
 
-.fa-1x {
-  font-size: 1.5rem;
-}
 .navbar-toggler.toggler-example {
   cursor: pointer;
 }
+.navbar-toggler.toggler-example:focus {
+  outline: none !important;
+}
+
 .dark-white-text {
   color: white;
 }
+
 .user-avatar {
   height: 25px;
   background: white;
   border-radius: 50%;
   margin-right: 5px;
+}
+
+.navlist__user i {
+  font-size: 20px;
 }
 </style>
