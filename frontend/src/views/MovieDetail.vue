@@ -1,53 +1,63 @@
 <template>
   <div v-if="selectedMovie" class="movie-detail">
-    <div class="movie-container">
-      <img :src="poster_path" />
-      <div class="movie-container__column">
-        <div class="detail" v-if="!isDetailMoreActive">
-          <div class="info">
+    <div class="detail-container">
+      <div class="container__column">
+        <img :src="poster_path" />
+        <i
+          @click="toCreateReview"
+          class="fas fa-edit detail__review-create-btn"
+        ></i>
+      </div>
+      <div class="container__column">
+        <div class="detail__info" v-if="!isMovieDetails">
+          <div class="info__desc">
             <h4>{{ selectedMovie.title }}</h4>
             <p>
-              <span class="info__release">{{
+              <span class="desc__release">{{
                 selectedMovie.release_date.slice(0, 4)
               }}</span>
               |
               <span
-                class="info__genre"
+                class="desc__genre"
                 v-for="genre in selectedMovie.genres"
                 :key="selectedMovie.genres.indexOf(genre)"
                 >{{ genre.name }}
               </span>
               |
-              <span class="info__rating">
+              <span class="desc__rating">
                 <i class="fas fa-star"></i>
                 {{ selectedMovie.vote_average }}
               </span>
               |
             </p>
-            <p class="info__overview">
+            <p class="desc__overview">
               {{ selectedMovie.overview }}
             </p>
           </div>
-          <div class="review">
-            <div v-if="selectedMovie.reviews.length > 0">
-              <div
+          <div class="info__reviews">
+            <div
+              class="reviews__has"
+              v-if="selectedMovie.reviews.length > 0"
+            >
+              <span
                 v-if="selectedMovie.reviews.length > 3"
-                class="text-right mb-2"
+                class="reviews__more-btn"
+                @click="showMoreReviews"
               >
-                <span class="more-btn" @click="showReviews">
-                  더보기
-                </span>
+                리뷰 더보기
+              </span>
+              <div class="reviews__container">
+                <Review
+                  v-for="review in selectedMovie.reviews.slice(
+                    0,
+                    3
+                  )"
+                  :review="review"
+                  :key="review.id"
+                />
               </div>
-              <Review
-                v-for="review in selectedMovie.reviews.slice(
-                  0,
-                  3
-                )"
-                :review="review"
-                :key="review.id"
-              />
             </div>
-            <div v-else>
+            <div class="reviews__none" v-else>
               <p>
                 아직 등록된 리뷰가 없습니다. 첫 리뷰의
                 주인공이 되어보세요!
@@ -55,11 +65,15 @@
             </div>
           </div>
         </div>
-        <div class="review-more" v-if="isDetailMoreActive">
+        <div
+          class="detail__reviews-more"
+          v-if="isMovieDetails"
+        >
+          <i
+            class="fas fa-long-arrow-alt-left"
+            @click="backToDetail"
+          ></i>
           <Reviews />
-        </div>
-        <div class="review-create-btn" @click="toCreateReview">
-          <i class="fas fa-edit"></i>
         </div>
       </div>
     </div>
@@ -75,7 +89,7 @@ export default {
   name: "MovieDetail",
   data() {
     return {
-      isDetailMoreActive: null,
+      isMovieDetails: null,
     };
   },
   components: {
@@ -96,7 +110,7 @@ export default {
   },
   methods: {
     ...mapActions(["getMovieDetail"]),
-    showReviews() {
+    showMoreReviews() {
       this.$router.push({
         name: "MovieReviews",
         params: { moviePK: this.moviePK },
@@ -106,22 +120,28 @@ export default {
       this.$router.push({
         name: "ReviewCreate",
         params: { moviePK: this.moviePK },
-      })
-    }
+      });
+    },
+    backToDetail() {
+      this.$router.push({
+        name: "MovieDetail",
+        params: { moviePK: this.moviePK },
+      });
+    },
   },
   watch: {
     moviePK() {
       this.getMovieDetail(this.moviePK);
     },
     $route() {
-      this.isDetailMoreActive =
+      this.isMovieDetails =
         this.$route.name === "MovieReviews" ||
         this.$route.name === "ReviewDetail";
     },
   },
   created() {
     this.getMovieDetail(this.moviePK);
-    this.isDetailMoreActive =
+    this.isMovieDetails =
       this.$route.name === "MovieReviews" ||
       this.$route.name === "ReviewDetail";
   },
@@ -129,80 +149,120 @@ export default {
 </script>
 
 <style scoped>
-* {
-  box-sizing: border-box;
-}
-
 .movie-detail {
-  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
-}
-
-.movie-container {
-  width: 70%;
-  height: 80%;
-  display: flex;
-  align-items: start;
-  font-size: 14px;
-  line-height: 1.3;
-}
-.movie-container img {
-  margin-right: 20px;
-  min-width: 250px;
-  width: 50%;
-  height: auto;
-}
-.movie-container__column {
-  width: 100%;
   height: 100%;
 }
 
-.info {
-  padding-bottom: 5px;
-  margin-bottom: 15px;
-  border-bottom: 1px solid rgba(252, 252, 252, 0.5);
+.detail-container {
+  display: flex;
+  align-items: start;
+  width: 70%;
+  height: 80%;
+  font-size: 14px;
+  line-height: 1.3;
 }
-.info__rating i {
+
+.container__column:first-child {
+  position: relative;
+  width: 30%;
+  height: 100%;
+  min-width: 250px;
+}
+
+img {
+  width: 100%;
+  height: auto;
+}
+
+.container__column:last-child {
+  position: relative;
+  width: 70%;
+  height: 100%;
+  margin-left: 20px;
+}
+
+.detail__info {
+  height: 100%;
+}
+
+.info__desc {
+  margin-bottom: 15px;
+  border-bottom: 1px solid rgb(212, 212, 212);
+}
+
+.desc__rating i {
   color: rgb(255, 188, 2);
 }
 
-.info__overview {
-  height: 90px;
+.desc__overview {
+  height: 50px;
   overflow-y: scroll;
 }
 
-.more-btn {
+.reviews__has {
+  text-align: right;
+}
+
+.reviews__container {
+  margin-top: 5px;
+}
+
+.reviews__none {
+  text-align: center;
+  font-size: 20px;
+}
+
+.reviews__more-btn {
   font-weight: 600;
   cursor: pointer;
   transition: color 0.1s ease-in-out;
 }
-.more-btn:hover {
+
+.reviews__more-btn:hover {
   color: rgba(252, 252, 252, 0.8);
 }
-.review-create-btn {
-  font-size: 20px;
-  text-align: right;
-}
-.review-create-btn i {
-  background-color: white;
+
+.detail__review-create-btn {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  background-color: rgb(255, 188, 2);
   color: black;
+  font-size: 20px;
   padding: 10px;
   border-radius: 50%;
   opacity: 0.9;
   cursor: pointer;
   transition: background-color 0.1s ease-in-out;
 }
-.review-create-btn i:hover {
-  background-color: rgb(255, 188, 2);
+
+.detail__review-create-btn:hover {
   color: black;
+  background-color: white;
 }
 
-.review-more {
+.detail__reviews-more {
   padding-right: 10px;
   height: 480px;
   overflow-y: scroll;
+}
+
+.detail__reviews-more i {
+  position: absolute;
+  background-color: white;
+  color: black;
+  padding: 0px 15px;
+  border-radius: 10px;
+  top: -30px;
+  font-size: 20px;
+  margin-bottom: 10px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.detail__reviews-more i:hover {
+  background-color: rgba(252, 252, 252, 0.8);
 }
 </style>

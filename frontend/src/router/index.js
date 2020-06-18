@@ -32,6 +32,21 @@ const routes = [
     component: MoviesAll,
   },
   {
+    path: "/movies/:moviePK(\\d+)",
+    name: "MovieDetail",
+    component: MovieDetail,
+  },
+  {
+    path: "/movies/:moviePK(\\d+)/reviews",
+    name: "MovieReviews",
+    component: MovieDetail,
+  },
+  {
+    path: "/movies/:moviePK(\\d+)/reviews/:reviewPK(\\d+)",
+    name: "ReviewDetail",
+    component: MovieDetail,
+  },
+  {
     path: "/movies/:moviePK(\\d+)/reviews/create",
     name: "ReviewCreate",
     component: ReviewCreate,
@@ -47,21 +62,6 @@ const routes = [
       "/movies/:moviePK(\\d+)/reviews/:reviewPK(\\d+)/edit",
     name: "ReviewEdit",
     component: ReviewEdit,
-  },
-  {
-    path: "/movies/:moviePK(\\d+)/reviews/:reviewPK(\\d+)",
-    name: "ReviewDetail",
-    component: MovieDetail,
-  },
-  {
-    path: "/movies/:moviePK(\\d+)/reviews",
-    name: "MovieReviews",
-    component: MovieDetail,
-  },
-  {
-    path: "/movies/:moviePK(\\d+)",
-    name: "MovieDetail",
-    component: MovieDetail,
   },
   {
     path: "/reviews",
@@ -99,7 +99,6 @@ const routes = [
     name: "Logout",
     component: Logout,
   },
-
   // component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
 ];
 
