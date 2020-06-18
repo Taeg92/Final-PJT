@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
-import MoviesAll from "../views/MoviesAll.vue";
+import Home from "../views/movies/Home.vue";
+import MoviesAll from "../views/movies/MoviesAll.vue";
 import MovieDetail from "../views/MovieDetail.vue";
 import Signup from "../views/accounts/Signup.vue";
 import Login from "../views/accounts/Login.vue";
@@ -18,9 +18,33 @@ Vue.use(VueRouter);
 
 const routes = [
   {
+    path: "/",
+    redirect: { name: "Home" },
+  },
+  {
+    path: "/movies/recommend",
+    name: "Home",
+    component: Home,
+  },
+  {
     path: "/movies/all",
     name: "MoviesAll",
     component: MoviesAll,
+  },
+  {
+    path: "/movies/:moviePK(\\d+)",
+    name: "MovieDetail",
+    component: MovieDetail,
+  },
+  {
+    path: "/movies/:moviePK(\\d+)/reviews",
+    name: "MovieReviews",
+    component: MovieDetail,
+  },
+  {
+    path: "/movies/:moviePK(\\d+)/reviews/:reviewPK(\\d+)",
+    name: "ReviewDetail",
+    component: MovieDetail,
   },
   {
     path: "/movies/:moviePK(\\d+)/reviews/create",
@@ -38,21 +62,6 @@ const routes = [
       "/movies/:moviePK(\\d+)/reviews/:reviewPK(\\d+)/edit",
     name: "ReviewEdit",
     component: ReviewEdit,
-  },
-  {
-    path: "/movies/:moviePK(\\d+)/reviews/:reviewPK(\\d+)",
-    name: "ReviewDetail",
-    component: MovieDetail,
-  },
-  {
-    path: "/movies/:moviePK(\\d+)/reviews",
-    name: "MovieReviews",
-    component: MovieDetail,
-  },
-  {
-    path: "/movies/:moviePK(\\d+)",
-    name: "MovieDetail",
-    component: MovieDetail,
   },
   {
     path: "/reviews",
@@ -89,11 +98,6 @@ const routes = [
     path: "/logout",
     name: "Logout",
     component: Logout,
-  },
-  {
-    path: "/",
-    name: "Home",
-    component: Home,
   },
   // component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
 ];

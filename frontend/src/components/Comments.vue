@@ -1,6 +1,10 @@
 <template>
   <div class="comments">
-    <Comment v-for="comment in comments" :comment="comment" :key="comment.id" />
+    <Comment
+      v-for="comment in comments"
+      :comment="comment"
+      :key="comment.id"
+    />
   </div>
 </template>
 
@@ -10,17 +14,17 @@ import Comment from "./Comment";
 export default {
   name: "Comments",
   components: {
-    Comment
+    Comment,
   },
   props: {
-    comments: Array
-  }
+    comments: Array,
+  },
 };
 </script>
 
 <style>
 .comments {
-  height: 85%;
+  height: 90%;
   overflow-y: scroll;
 }
 </style>

@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import Poster from "../components/Poster";
+import Poster from "../../components/Poster";
 import { mapState, mapActions } from "vuex";
 
 export default {
@@ -33,5 +33,8 @@ export default {
 .movies-all {
   display: flex;
   flex-wrap: wrap;
+  padding: 40px 20px;
+  padding-right: 0px;
+  background-color: black;
 }
 </style>
