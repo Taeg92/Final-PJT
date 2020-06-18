@@ -53,31 +53,35 @@ export default {
 
 <style scoped>
 .login {
+  position: absolute;
+  left: 0;
+  right: 0;
   margin-top: 30px;
   background: rgba(0, 0, 0, 0.8);
   padding: 50px;
   height: 600px;
   width: 400px;
   border-radius: 5px;
-  z-index: 1;
 }
 
 .background {
+  margin-top: 80px;
   height: 100vh;
+  width: 100vw;
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
   background-image: url("https://assets.nflxext.com/ffe/siteui/vlv3/3b48f428-24ed-4692-bb04-bc7771854131/fb5674c7-afc0-4c05-9f06-ef601019b114/KR-ko-20200302-popsignuptwoweeks-perspective_alpha_website_small.jpg");
-  z-index: -1;
+  z-index: auto;
 }
 .background-filter {
+  margin-top: 80px;
   height: 100vh;
   position: absolute;
+  width: 100vw;
   top: 0;
   left: 0;
-  right: 0;
   background: rgba(0, 0, 0, 0.5);
-  z-index: -1;
+  z-index: auto;
 }
 </style>

@@ -94,6 +94,9 @@ export default {
 
 <style scoped>
 .create-review {
+  position: absolute;
+  left: 0;
+  right: 0;
   margin-top: 30px;
   background: rgba(0, 0, 0, 0.7);
   padding: 50px;
@@ -102,21 +105,24 @@ export default {
   border-radius: 5px;
 }
 .background {
+  margin-top: 80px;
   height: 100vh;
   position: absolute;
   background-size: cover;
   top: 0;
   left: 0;
   right: 0;
-  z-index:-1;
+  z-index: auto;
 }
 .background-filter {
+  margin-top: 80px;
   height: 100vh;
   position: absolute;
+  background: rgba(0, 0, 0, 0.6);
   top: 0;
   left: 0;
   right: 0;
-  z-index: -1;
+  z-index: auto;
 }
 .movie-post {
   border-radius: 15px;
