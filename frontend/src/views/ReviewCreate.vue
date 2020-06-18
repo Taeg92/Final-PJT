@@ -1,43 +1,94 @@
 <template>
-  <div>
-    <div class="background" v-bind:style="{ backgroundImage: 'url(' + backdrop_poster + ')' }"></div>
+  <div class="review-create">
+    <div
+      class="background"
+      v-bind:style="{
+        backgroundImage: 'url(' + backdrop_poster + ')',
+      }"
+    ></div>
     <div class="background-filter"></div>
-    <div class="create-review container">
-      <h3 class="text-light font-weight-bold mb-4">리뷰 작성</h3>
-      <div class="row">
-        <div class="col-sm-4">
-          <img class="img-fluid movie-post" :src="movie_poster">
+    <div class="create-container">
+      <div
+        class="container__cancel-btn"
+        @click="backToDetail"
+      >
+        x
+      </div>
+      <div class="container__contents">
+        <div class="contents__column">
+          <img :src="movie_poster" />
         </div>
-        <div class="col-sm-8">
-          <div>
-            <input
-              class="form-control"
-              id="title"
-              v-model="submitInfo.reviewData.title"
-              type="text"
-            />
-            <small><span class="text-muted d-block my-1">제목을 입력해주세요.</span></small>
+        <div class="contents__column">
+          <input
+            class="form-control"
+            id="title"
+            v-model="submitInfo.reviewData.title"
+            type="text"
+          />
+          <small
+            ><span class="text-muted d-block my-1"
+              >제목을 입력해주세요.</span
+            ></small
+          >
+          <textarea
+            class="form-control"
+            id="content"
+            v-model="submitInfo.reviewData.content"
+            rows="7"
+          />
+          <small
+            ><span class="text-muted d-block mt-1"
+              >리뷰 내용을 입력해주세요.</span
+            ></small
+          >
+          <div class="contents__rating">
+            <i
+              class="fas fa-star fa-3x"
+              :class="{ onStar: isChecked(1) }"
+              id="1"
+              @click="getRating"
+              style="cursor: pointer"
+            ></i>
+            <i
+              class="fas fa-star fa-3x"
+              :class="{ onStar: isChecked(2) }"
+              id="2"
+              @click="getRating"
+              style="cursor: pointer"
+            ></i>
+            <i
+              class="fas fa-star fa-3x"
+              :class="{ onStar: isChecked(3) }"
+              id="3"
+              @click="getRating"
+              style="cursor: pointer"
+            ></i>
+            <i
+              class="fas fa-star fa-3x"
+              :class="{ onStar: isChecked(4) }"
+              id="4"
+              @click="getRating"
+              style="cursor: pointer"
+            ></i>
+            <i
+              class="fas fa-star fa-3x"
+              :class="{ onStar: isChecked(5) }"
+              id="5"
+              @click="getRating"
+              style="cursor: pointer"
+            ></i>
           </div>
-          <div>
-            <textarea
-              class="form-control"
-              id="content"
-              v-model="submitInfo.reviewData.content"
-              rows="7"
-            />
-            <small><span class="text-muted d-block mt-1">리뷰 내용을 입력해주세요.</span></small>
-          </div>
-          <div class="my-3">
-            <div class="d-flex justify-content-around">
-              <i class="fas fa-star fa-3x" :class="{onStar: isChecked(1)}" id="1" @click="getRating" style="cursor: pointer"></i>
-              <i class="fas fa-star fa-3x" :class="{onStar: isChecked(2)}" id="2" @click="getRating" style="cursor: pointer"></i>
-              <i class="fas fa-star fa-3x" :class="{onStar: isChecked(3)}" id="3" @click="getRating" style="cursor: pointer"></i>
-              <i class="fas fa-star fa-3x" :class="{onStar: isChecked(4)}" id="4" @click="getRating" style="cursor: pointer"></i>
-              <i class="fas fa-star fa-3x" :class="{onStar: isChecked(5)}" id="5" @click="getRating" style="cursor: pointer"></i>
-            </div>
-            <small><span class="text-muted d-block mt-2">평점을 입력해주세요.</span></small>
-          </div>
-          <button class="form-control btn-danger mt-5" @click="submitReview(submitInfo)">리뷰 작성</button>
+          <small
+            ><span class="text-muted d-block mt-2"
+              >평점을 입력해주세요.</span
+            ></small
+          >
+          <button
+            class="form-control btn-danger mt-2"
+            @click="submitReview(submitInfo)"
+          >
+            리뷰 작성
+          </button>
         </div>
       </div>
     </div>
@@ -56,8 +107,8 @@ export default {
         reviewData: {
           title: "",
           content: "",
-          rating: null
-        }
+          rating: null,
+        },
       },
       backdrop_poster: null,
       movie_poster: null,
@@ -67,65 +118,120 @@ export default {
     ...mapState(["selectedMovie"]),
   },
   methods: {
-    ...mapActions(['getMovieDetail', 'submitReview']),
+    ...mapActions(["getMovieDetail", "submitReview"]),
     changeURL() {
-      this.backdrop_poster = "https://image.tmdb.org/t/p/original" + this.selectedMovie.backdrop_path
-      this.movie_poster = "https://image.tmdb.org/t/p/original" + this.selectedMovie.poster_path
+      this.backdrop_poster =
+        "https://image.tmdb.org/t/p/original" +
+        this.selectedMovie.backdrop_path;
+      this.movie_poster =
+        "https://image.tmdb.org/t/p/original" +
+        this.selectedMovie.poster_path;
     },
     getRating(event) {
-      this.submitInfo.reviewData.rating = event.target.id
+      this.submitInfo.reviewData.rating = event.target.id;
     },
     isChecked(value) {
       if (value <= this.submitInfo.reviewData.rating) {
-        return true
+        return true;
       } else {
-        return false
+        return false;
       }
-    }
+    },
+    backToDetail() {
+      this.$router.push({
+        name: "MovieDetail",
+        params: { moviePK: this.submitInfo.moviePK },
+      });
+    },
   },
   watch: {
-    'selectedMovie': 'changeURL'
+    selectedMovie: "changeURL",
   },
   created() {
     this.getMovieDetail(this.submitInfo.moviePK);
-  }
+  },
 };
 </script>
 
 <style scoped>
-.create-review {
-  position: absolute;
-  left: 0;
-  right: 0;
-  margin-top: 30px;
-  background: rgba(0, 0, 0, 0.7);
-  padding: 50px;
-  height: 600px;
-  width: 900px;
-  border-radius: 5px;
+.review-create {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
 .background {
-  margin-top: 80px;
-  height: 100vh;
   position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
   background-size: cover;
-  top: 0;
-  left: 0;
-  right: 0;
+  height: 100%;
   z-index: auto;
 }
+
 .background-filter {
-  margin-top: 80px;
-  height: 100vh;
   position: absolute;
-  background: rgba(0, 0, 0, 0.6);
   top: 0;
   left: 0;
   right: 0;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
   z-index: auto;
 }
-.movie-post {
+
+.create-container {
+  position: relative;
+  height: 80%;
+  width: 70%;
+  min-width: 650px;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 5px;
+  padding: 50px;
+  z-index: 5;
+}
+
+.container__cancel-btn {
+  position: absolute;
+  top: 3px;
+  right: 15px;
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.container__contents {
+  display: flex;
+}
+
+.contents__column:first-child {
+  width: 30%;
+  height: 100%;
+  min-width: 250px;
+  margin-right: 20px;
+}
+
+.contents__column:first-child img {
+  width: 100%;
+  height: auto;
   border-radius: 15px;
+}
+
+.contents__column:last-child {
+  width: 70%;
+  height: 100%;
+}
+
+.contents__column:last-child input {
+  width: 100%;
+}
+
+.contents__rating {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 5px;
+  color: rgb(204, 204, 204);
 }
 
 .onStar {

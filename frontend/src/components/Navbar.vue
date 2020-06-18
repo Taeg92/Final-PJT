@@ -1,15 +1,17 @@
 <template>
   <nav class="navbar navbar-expand-lg">
-    <router-link
-      class="navbar-brand my-0 mr-md-auto font-weight-bold"
-      to="/"
-      >Movie</router-link
-    >
-    <router-link
-      class="p-2 text-light ml-3"
-      to="/movies/all"
-      >All Movie</router-link
-    >
+    <div>
+      <router-link
+        class="navbar-brand my-0 mr-md-auto font-weight-bold"
+        to="/"
+        >MEFLIX</router-link
+      >
+      <router-link
+        class="p-2 text-light ml-3"
+        to="/movies/all"
+        >All Movie</router-link
+      >
+    </div>
     <button
       class="navbar-toggler toggler-example"
       type="button"
@@ -28,12 +30,15 @@
         class="navbar-nav ml-auto d-flex justify-content-end align-items-center"
       >
         <li v-if="isLoggedIn">
-          <span v-if="loginUser">
+          <span
+            v-if="loginUser"
+            class="d-flex align-items-center"
+          >
             <img
               class="user-avatar"
               :src="userAvatarURL"
               alt="avatar"
-            />
+            />{{ loginUser.username }} 님,
           </span>
           <span v-else>
             <i class="fas fa-user fa-2x"></i>
@@ -78,25 +83,27 @@ export default {
     return {
       userAvatarURL: null,
       loginUser: null,
-    }
+    };
   },
   computed: {
     ...mapGetters(["isLoggedIn"]),
     ...mapState(["user"]),
   },
   methods: {
-    ...mapActions(['getUserData']),
+    ...mapActions(["getUserData"]),
     changeURL() {
-      this.userAvatarURL = API.DB_BASE + this.$store.state.user.avatar.slice(1)
-      this.loginUser = this.$store.state.user
+      this.userAvatarURL =
+        API.DB_BASE +
+        this.$store.state.user.avatar.slice(1);
+      this.loginUser = this.$store.state.user;
     },
   },
   watch: {
-    'user': 'changeURL'
+    user: "changeURL",
   },
   created() {
-    this.getUserData()
-  }
+    this.getUserData();
+  },
 };
 </script>
 
@@ -121,8 +128,6 @@ export default {
   color: #e50a13;
 }
 
-/* #nav a.router-link-exact-active {
-} */
 .fa-1x {
   font-size: 1.5rem;
 }
@@ -133,8 +138,9 @@ export default {
   color: white;
 }
 .user-avatar {
-  border-radius: 50%;
-  height: 40px;
+  height: 25px;
   background: white;
+  border-radius: 50%;
+  margin-right: 5px;
 }
 </style>

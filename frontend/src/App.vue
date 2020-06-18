@@ -37,6 +37,7 @@ export default {
 
 main {
   flex: 1;
+  position: relative;
 }
 
 input:focus {
