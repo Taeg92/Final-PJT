@@ -240,10 +240,11 @@ export default new Vuex.Store({
         })
         .catch((err) => console.log(err.response));
     },
-    getUserData({ commit }, username) {
+    getUserData({ commit, getters }) {
       axios
         .get(
-          API.DB_BASE + API.DB_ROUTES.getUserData(username)
+          API.DB_BASE + API.DB_ROUTES.getUserData,
+          getters.config
         )
         .then((res) => {
           commit("SET_USER", res.data);
@@ -255,7 +256,7 @@ export default new Vuex.Store({
         .post(API.DB_BASE + info.route, info.data)
         .then((res) => {
           commit("SET_TOKEN", res.data.key);
-          dispatch("getUserData", info.data.username);
+          dispatch("getUserData");
           router.push({ name: "Home" });
         })
         .catch((err) => console.log(err.response));
