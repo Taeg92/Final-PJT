@@ -19,13 +19,11 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ml-auto d-flex justify-content-end align-items-center navlist">
-        <li v-if="isLoggedIn" class="navlist__user">
-          <span v-if="loginUser" class="d-flex align-items-center">
-            <img class="user-avatar" :src="userAvatarURL" alt="avatar" />
+        <li v-if="loginUser" class="navlist__user">
+          <span class="d-flex align-items-center">
+            <img v-if="userAvatarURL" class="user-avatar" :src="userAvatarURL" alt="avatar" />
+            <i v-else class="fas fa-user fa-2x"></i>
             {{ loginUser.username }} 님,
-          </span>
-          <span v-else>
-            <i class="fas fa-user fa-2x"></i>
           </span>
         </li>
         <li v-if="isLoggedIn" class="nav-item mx-1 my-1 navlist__logout">
@@ -65,8 +63,15 @@ export default {
   methods: {
     ...mapActions(["getUserData"]),
     changeURL() {
-      this.userAvatarURL = API.DB_BASE + this.$store.state.user.avatar.slice(1);
-      this.loginUser = this.$store.state.user;
+      if (this.user) {
+        this.loginUser = this.user;
+        if (this.user.avatar) {
+          this.userAvatarURL = API.DB_BASE + this.user.avatar.slice(1);
+        }
+      } else {
+        this.loginUser = null;
+        this.userAvatarURL = null;
+      }
     }
   },
   watch: {
