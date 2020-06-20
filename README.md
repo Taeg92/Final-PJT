@@ -63,3 +63,6 @@
   - user_pk (FK)
   - review_pk (FK)
 
+
+
+ERD + Tech Stack + Teck Log + README generator
