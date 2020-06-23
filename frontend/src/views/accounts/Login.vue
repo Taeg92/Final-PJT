@@ -9,7 +9,13 @@
         <span class="text-muted d-block my-1">아이디를 입력해주세요.</span>
       </small>
       <form>
-        <input class="form-control" id="password" v-model="loginData.password" type="password" />
+        <input
+          class="form-control"
+          id="password"
+          v-model="loginData.password"
+          type="password"
+          autocomplete="off"
+        />
       </form>
       <small>
         <span class="text-muted d-block mt-1 mb-5">비밀번호를 입력해주세요.</span>
