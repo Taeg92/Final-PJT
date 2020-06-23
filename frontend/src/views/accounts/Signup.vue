@@ -9,13 +9,25 @@
         <span class="text-muted d-block my-1">아이디를 입력해주세요.</span>
       </small>
       <form>
-        <input class="form-control" id="password1" v-model="signupData.password1" type="password" />
+        <input
+          class="form-control"
+          id="password1"
+          v-model="signupData.password1"
+          type="password"
+          autocomplete="off"
+        />
       </form>
       <small>
         <span class="text-muted d-block mt-1">비밀번호를 입력해주세요.</span>
       </small>
       <form>
-        <input class="form-control" id="password2" v-model="signupData.password2" type="password" />
+        <input
+          class="form-control"
+          id="password2"
+          v-model="signupData.password2"
+          type="password"
+          autocomplete="off"
+        />
       </form>
       <small>
         <span class="text-muted d-block mt-1 mb-4">비밀번호를 한번 더 입력해주세요.</span>
