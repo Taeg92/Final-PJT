@@ -44,7 +44,7 @@ $ npm install
 
 ### 📝ERD
 
-![](./assets/ERD.png)
+<div style="width: 90%; margin: 0 auto"><img src="./assets/ERD.png"></div>
 
 ​    
 
