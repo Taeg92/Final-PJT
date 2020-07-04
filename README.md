@@ -67,17 +67,13 @@ $ npm install
 │   ├── 📁community
 │   ├── db.sqlite3
 │   ├── 📁final_project
-│   ├── manage.py
-│   ├── moviedata.json
 │   └── requirements.txt
 └── 📁frontend
-    ├── babel.config.js
     ├── 📁public
     └── 📁src
         ├── App.vue
         ├── 📁api
         ├── 📁components
-        ├── main.js
         ├── 📁router
         ├── 📁store
         └── 📁views
@@ -91,8 +87,7 @@ $ npm install
 
 👤 전공파괴조
 
-> 🦸‍♀️ [전은정](https://github.com/eunjung-jenny)<br />
-> 🦸‍♂️ [공태경](https://github.com/Taeg92)<br />
+> 🦸‍♀️ [전은정](https://github.com/eunjung-jenny)<br />🦸‍♂️ [공태경](https://github.com/Taeg92)<br />
 
 ​           
 
